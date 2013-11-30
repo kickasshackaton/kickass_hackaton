@@ -59,8 +59,10 @@ def check_target(request):
     #  TODO for any target add code
 
     if(request.method == "GET"):
+
+
         coursera_id=parse_coursera_api(request.GET["url"])
-        user_to_look= DBSession.query(User).filter(User.id == request.GET("user_id")).first()
+        user_to_look= DBSession.query(User).filter(User.id == request.GET["user_id"]).first()
         target_to_look = user_to_look.my_targets.filter(Target.url == coursera_id).first()
         if(target_to_look):
             return {"target" : target_to_look}
