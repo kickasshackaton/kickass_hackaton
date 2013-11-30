@@ -79,8 +79,8 @@
                   <div>
                 or else shall my money go to
                   <select class="form-control" id="charity_fund">
-                    <option tal:repeat="current charity_funds">${current}</option>
-                      <option tal:repeat="current charity_funds">${current}</option>
+                    <option tal:repeat="current charity_funds['anticharity']">${current}</option>
+                    <option tal:repeat="current charity_funds['charity']">${current}</option>
                   </select>
                 </div>
                   <div>
@@ -94,8 +94,8 @@
               </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Add target</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">I yield</button>
+              <button type="button" class="btn btn-primary">So be it!</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
