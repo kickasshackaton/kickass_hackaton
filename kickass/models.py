@@ -51,8 +51,12 @@ class User(Base):
         self.password = password
         self.money = money
         self.mail = mail
-    #def __repr__(self):
-    #    return "User id: "+str(self.id)+" name: "+ str(self.name) + " targets: " + str(len(self.my_targets)) + " overseered: " + str(len(self.overseered_targets)) +"\n"
+    def __repr__(self):
+        return {"id" : self.id,"name" : self.name, "money" : self.money, "mail" : self.mail}.__str__()
+    def __json__(self,request):
+        return {"id" : self.id,"name" : self.name, "money" : self.money, "mail" : self.mail}
+
+        #return "User id: "+str(self.id)+" name: "+ str(self.name) + " targets: " + str(len(self.my_targets)) + " overseered: " + str(len(self.overseered_targets)) +"\n"
 
 class Target(Base):
     __tablename__ = 'Target'

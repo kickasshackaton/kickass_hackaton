@@ -49,7 +49,7 @@ def home_default(request):
 @view_config(route_name='list_users', renderer='json')
 def list_users(request):
     user_list = DBSession.query(User).all()
-    return user_list#{"list_users" : user_list}
+    return {"user_list": user_list} #{"list_users" : user_list}
 
 @view_config(route_name='check_target', renderer='json')
 def check_target(request):
@@ -60,7 +60,7 @@ def check_target(request):
 
     if(request.method == "GET"):
         coursera_id=parse_coursera_api(request.GET["url"])
-        user_to_look= DBSession.query(User).filter(User.id == "user_id").first()
+        user_to_look= DBSession.query(User).filter(User.id == request.GET("user_id")).first()
         target_to_look = user_to_look.my_targets.filter(Target.url == coursera_id).first()
         if(target_to_look):
             return {"target" : target_to_look}
