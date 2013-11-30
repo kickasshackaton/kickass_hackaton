@@ -32,9 +32,10 @@ def home(request):
     try:
         #one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
         targets = DBSession.query(User).filter(User.id == request.matchdict["id"]).all()[0].my_targets
+        list_users = DBSession.query(User).all()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'layout' : site_layout(),'targets' : targets}
+    return {'layout' : site_layout(),'targets' : targets, 'list_users' : list_users}
 
 @view_config(route_name='home_default', renderer='templates/courses.pt')
 def home_default(request):
