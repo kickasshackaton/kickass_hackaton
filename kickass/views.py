@@ -6,6 +6,8 @@ from sqlalchemy.exc import DBAPIError
 from .models import (
     DBSession,
     MyModel,
+    Target,
+    User
     )
 
 def site_layout():
@@ -15,11 +17,13 @@ def site_layout():
 
 @view_config(route_name='home', renderer='templates/courses.pt')
 def home(request):
+
     try:
-        one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
+        #one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
+        targets = DBSession.query(User).filter(User.id == request.matchdict["id"]).all()[0].my_targets
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'layout' : site_layout(),'one': one, 'project': 'kickass'}
+    return {'layout' : site_layout(),'targets' : targets}
 
 conn_err_msg = """\
 Pyramid is having a problem using your SQL database.  The problem
