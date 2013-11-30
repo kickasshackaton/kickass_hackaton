@@ -140,28 +140,28 @@ def check_target(request):
 
 @view_config(route_name='add_target', renderer='json')
 def add_target(request):
-    if(request.method == "GET"):
-        if(request.GET.has_key("type")):
+    if(request.method == "POST"):
+        if(request.POST.has_key("type")):
             new_target = Target(
-                name=request.GET["name"],
+                name=request.POST["name"],
                 deadline=datetime.fromtimestamp(12345566),
-                bid=request.GET["bid"],
-                url=request.GET["url"]
+                bid=request.POST["bid"],
+                url=request.POST["url"]
             )
-            new_target.type = request.GET["type"]
-            new_target.charity_type = request.GET["charity_type"]
+            new_target.type = request.POST["type"]
+            new_target.charity_type = request.POST["charity_type"]
         else:
-            url = parse_coursera_api(request.GET["url"])
+            url = parse_coursera_api(request.POST["url"])
             new_target = Target(
-                name=request.GET["name"],
+                name=request.POST["name"],
                 deadline=get_enrolled_course_deadline_by_url(url),
-                bid=request.GET["bid"],
+                bid=request.POST["bid"],
                 url=url
             )
-            new_target.charity_type = request.GET["charity_type"]
+            new_target.charity_type = request.POST["charity_type"]
         DBSession.add(new_target)
-        new_target.user = DBSession.query(User).filter(User.id == request.GET["user"]).first()
-        new_target.overseer = DBSession.query(User).filter(User.id == request.GET["overseer"]).first()
+        new_target.user = DBSession.query(User).filter(User.id == request.POST["user"]).first()
+        new_target.overseer = DBSession.query(User).filter(User.id == request.POST["overseer"]).first()
 
     return {"Status" : "OK"}
 
