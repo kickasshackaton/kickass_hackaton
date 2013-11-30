@@ -42,7 +42,8 @@ class User(Base):
     password = Column(Text)
     money = Column(Float)
     mail = Column(Text)
-    targets = relationship('Target', back_populates='user')
+    my_targets = relationship('Target', back_populates='user')
+    overseered_targets = relationship('Target', back_populates='user')
     def __init__(self, name, username, password, money = 0, mail = "" ):
         self.name = name
         self.username = username
@@ -61,8 +62,10 @@ class Target(Base):
     bid = Column(Float)
     #source = Column(Integer, ForeignKey('User.id'))
     user_id = Column(Integer, ForeignKey('User.id'))
+    overseer_id = Column(Integer, ForeignKey('User.id'))
 
-    user = relationship('User', back_populates='targets')
+    user = relationship('User', back_populates='my_targets', foreign_keys=[user_id])
+    overseer = relationship('User', back_populates='overseered_targets', foreign_keys=[overseer_id])
     def __init__(self, name, deadline, bid, type = "coursera_course"):
         self.name = name
         self.type = type
