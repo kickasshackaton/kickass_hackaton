@@ -41,9 +41,14 @@ class User(Base):
     username = Column(Text)
     password = Column(Text)
     money = Column(Float)
-    
     mail = Column(Text)
     targets = relationship('Target', back_populates='user')
+    def __init__(self, name, username, password, money = 0, mail = "" ):
+        self.name = name
+        self.username = username
+        self.password = password
+        self.money = money
+        self.mail = mail
 
 class Target(Base):
     __tablename__ = 'Target'
@@ -51,10 +56,14 @@ class Target(Base):
     name = Column(Text)
     type = Column(Text)
     deadline = Column(DateTime)
-    money = Column(Float)
+    bid = Column(Float)
     #source = Column(Integer, ForeignKey('User.id'))
     user_id = Column(Integer, ForeignKey('User.id'))
 
     user = relationship('User', back_populates='targets')
-
+    def __init__(self, name, deadline, bid, type = "coursera_course"):
+        self.name = name
+        self.type = type
+        self.deadline = deadline
+        self.bid = bid
 
