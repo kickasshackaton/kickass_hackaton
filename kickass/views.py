@@ -20,7 +20,8 @@ from .models import (
     DBSession,
     MyModel,
     Target,
-    User
+    User,
+    charity_funds
     )
 
 def site_layout():
@@ -44,7 +45,7 @@ def home(request):
         list_users = DBSession.query(User).all()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'layout' : site_layout(),'targets' : targets, 'list_users' : list_users}
+    return {'layout' : site_layout(),'targets' : targets, 'list_users' : list_users, 'charity_funds' : charity_funds}
 
 @view_config(route_name='home_default', renderer='templates/courses.pt')
 def home_default(request):
@@ -55,7 +56,7 @@ def home_default(request):
         list_users = DBSession.query(User).all()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'layout' : site_layout(),'targets' : targets, 'list_users' : list_users}
+    return {'layout' : site_layout(),'targets' : targets, 'list_users' : list_users, 'charity_funds' : charity_funds}
 
 @view_config(route_name='list_users', renderer='json')
 def list_users(request):
@@ -140,7 +141,9 @@ def add_target(request):
 
     return {"Status" : "OK"}
 
-
+@view_config(route_name='get_charity_funds', renderer='json')
+def get_charity_funds(request):
+    return charity_funds
 
 
 
