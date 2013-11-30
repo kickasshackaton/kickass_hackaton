@@ -45,7 +45,7 @@ def main(argv=sys.argv):
         target1.current_progress = 30
         target1.user = user1
         target1.overseer = user3
-        target1 = Target(name="second course", deadline=datetime.datetime(year=2008,month=10, day=5),bid=500, url = "nanotech")
+        target1 = Target(name="Inroduction to Gay technologies", deadline=datetime.datetime(year=2008,month=10, day=5),bid=500, url = "nanotech")
         target1.planned_progress = 70
         target1.current_progress = 30
         target1.user = user2
