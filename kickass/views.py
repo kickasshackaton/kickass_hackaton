@@ -92,9 +92,9 @@ def get_enrollable_courses():
     listingCombined = courseraApi.listingCombined()
     topics = listingCombined['list2']['topics']
     courses = listingCombined['list2']['courses']
-    return map(lambda result, item:
-                    { "course" : item, "topic": topics[item['topic_id']] }
-        ,courses)
+    return list(map(lambda item:
+                    { "course" : item, "topic": topics[str(item['topic_id'])] }
+        ,courses))
 
 
 @view_config(route_name='check_target', renderer='json')
