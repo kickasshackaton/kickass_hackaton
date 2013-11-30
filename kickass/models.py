@@ -35,7 +35,7 @@ class MyModel(Base):
 Index('my_index', MyModel.name, unique=True, mysql_length=255)
 
 class User(Base):
-    __tablename__ = 'users'
+    __tablename__ = 'User'
     id = Column(Integer, primary_key=True)
     name = Column(Text)
     username = Column(Text)
@@ -46,7 +46,7 @@ class User(Base):
     targets = relationship('Target', back_populates='user')
 
 class Target(Base):
-    __tablename__ = 'target'
+    __tablename__ = 'Target'
     id = Column(Integer, primary_key=True)
     name = Column(Text)
     type = Column(Text)
