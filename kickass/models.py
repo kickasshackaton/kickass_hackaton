@@ -23,8 +23,8 @@ from zope.sqlalchemy import ZopeTransactionExtension
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 Base = declarative_base()
 
-charity_funds = {"anticharity" :  "for gays",
-                 "charity" : "for starving people"}
+charity_funds = {"anticharity" : ["for gays" , "for drunk"] ,
+                 "charity" : ["for starving","for babies"]}
 
 class MyModel(Base):
     __tablename__ = 'models'
