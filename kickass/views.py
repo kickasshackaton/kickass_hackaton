@@ -70,7 +70,12 @@ def check_target(request):
             else:
                 return {"result" : False}
         else: ## IT IS NOT COURSeRAAAAAAAAA TODO
-            return {"result" : False}
+            user_to_look= DBSession.query(User).filter(User.id == request.GET["user_id"]).first()
+            target_to_look = user_to_look.my_targets.filter(Target.url == request.GET["url"]).first()
+            if(target_to_look):
+                return {"target" : target_to_look}
+            else:
+                return {"result" : False}
     else:
         return {"result" : False}
 
