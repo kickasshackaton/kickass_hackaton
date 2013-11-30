@@ -41,8 +41,9 @@ class User(Base):
     username = Column(Text)
     password = Column(Text)
     money = Column(Float)
+    
     mail = Column(Text)
-    #targets = relationship('Target')
+    targets = relationship('Target', back_populates='user')
 
 class Target(Base):
     __tablename__ = 'target'
@@ -52,6 +53,8 @@ class Target(Base):
     deadline = Column(DateTime)
     money = Column(Float)
     #source = Column(Integer, ForeignKey('User.id'))
-    #user_id = Column(Integer, ForeignKey('User.id'))
+    user_id = Column(Integer, ForeignKey('User.id'))
+
+    user = relationship('User', back_populates='targets')
 
 
