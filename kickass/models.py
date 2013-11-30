@@ -5,6 +5,7 @@ from sqlalchemy import (
     Text,
     Float,
     DateTime,
+    ForeignKey
     )
 from sqlalchemy.orm import relationship, backref
 
@@ -47,5 +48,10 @@ class Target(Base):
     __tablename__ = 'target'
     id = Column(Integer, primary_key=True)
     name = Column(Text)
-    
+    type = Column(Text)
+    deadline = Column(DateTime)
+    money = Column(Float)
+    source = Column(Integer,ForeignKey('User.id'))
+    user_id = Column(Integer, ForeignKey('User.id'))
+
 
