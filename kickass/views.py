@@ -95,7 +95,7 @@ def check_target(request):
     #  TODO for any target add code
 
     if(request.method == "GET"):
-        if request.GET["url"] and ("coursera" in request.GET["url"]):
+        if request.GET.has_key("url") and ("coursera" in request.GET["url"]):
             coursera_id=parse_coursera_api(request.GET["url"])
             user_to_look= DBSession.query(User).filter(User.id == request.GET["user_id"]).first()
             #target_to_look = user_to_look.my_targets.filter(Target.url == coursera_id).first()
@@ -108,13 +108,17 @@ def check_target(request):
                 return {"target" : target_to_look}
             else:
                 enroll=get_enrolled_course_by_url(coursera_id)
-                print("Enroll = " + enroll)
+                #print("Enroll = " + enroll)
                 if(enroll != None):
-                    return {"enrolled" : enroll,"result" : False}
-                return {"result" : False}
+                    return {"enrolled" : True,"result" : False}
+                return {"enrolled" : False,"result" : False}
         else: ## IT IS NOT COURSeRAAAAAAAAA TODO
             user_to_look= DBSession.query(User).filter(User.id == request.GET["user_id"]).first()
-            target_to_look = user_to_look.my_targets.filter(Target.url == request.GET["url"]).first() ## TODO BUG TO FAULT!!!!
+            #target_to_look = user_to_look.my_targets.filter(Target.url == request.GET["url"]).first() ##
+            target_to_look = False
+            for target in user_to_look.my_targets:
+                if(target.url == request.GET["url"]):
+                    target_to_look = target#user_to_look.my_targets[0]
             if(target_to_look):
                 return {"target" : target_to_look}
             else:
