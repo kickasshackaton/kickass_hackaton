@@ -103,6 +103,10 @@ def check_target(request):
             if(target_to_look):
                 return {"target" : target_to_look}
             else:
+                enroll=get_enrolled_course_by_url(coursera_id)
+                print("Enroll = " + enroll)
+                if(enroll != None):
+                    return {"enrolled" : enroll,"result" : False}
                 return {"result" : False}
         else: ## IT IS NOT COURSeRAAAAAAAAA TODO
             user_to_look= DBSession.query(User).filter(User.id == request.GET["user_id"]).first()
@@ -127,6 +131,7 @@ def add_target(request):
                 url=request.GET["url"]
             )
             new_target.type = request.GET["type"]
+            new_target.charity_type = request.GET["charity_type"]
         else:
             url = parse_coursera_api(request.GET["url"])
             new_target = Target(
@@ -135,6 +140,7 @@ def add_target(request):
                 bid=request.GET["bid"],
                 url=url
             )
+            new_target.charity_type = request.GET["charity_type"]
         DBSession.add(new_target)
         new_target.user = DBSession.query(User).filter(User.id == request.GET["user"]).first()
         new_target.overseer = DBSession.query(User).filter(User.id == request.GET["overseer"]).first()
