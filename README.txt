@@ -1,4 +1,4 @@
-kickass README
+kickass :) README
 ==================
 
 Getting Started
