@@ -43,11 +43,14 @@ def main(argv=sys.argv):
         target1 = Target(name="first course", deadline=datetime.datetime(year=1987,month=10, day=5),bid=100)
         target1.user = user1
         target1.overseer = user3
+        target1 = Target(name="second course", deadline=datetime.datetime(year=2008,month=10, day=5),bid=500)
+        target1.user = user2
+        target1.overseer = user3
         DBSession.add(target1)
         DBSession.add(user1)
         DBSession.add(user2)
         DBSession.add(user3)
-        DBSession.add(model)
+        #DBSession.add(model)
         users = DBSession.query(User).all()
         print(users)
 

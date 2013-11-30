@@ -42,8 +42,8 @@ class User(Base):
     password = Column(Text)
     money = Column(Float)
     mail = Column(Text)
-    my_targets = relationship('Target', back_populates='user')
-    overseered_targets = relationship('Target', back_populates='user')
+    my_targets = relationship('Target', back_populates='user', foreign_keys='[Target.user_id]')
+    overseered_targets = relationship('Target', back_populates='overseer', foreign_keys='[Target.overseer_id]')
     def __init__(self, name, username, password, money = 0, mail = "" ):
         self.name = name
         self.username = username
@@ -51,7 +51,7 @@ class User(Base):
         self.money = money
         self.mail = mail
     def __repr__(self):
-        return "User id: "+str(self.id)+" name: "+ str(self.name) + " targets: "# + self.targets +"\n"
+        return "User id: "+str(self.id)+" name: "+ str(self.name) + " targets: " + str(len(self.my_targets)) + " overseered: " + str(len(self.overseered_targets)) +"\n"
 
 class Target(Base):
     __tablename__ = 'Target'
