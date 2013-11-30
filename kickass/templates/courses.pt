@@ -34,3 +34,49 @@
 
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="newCourseCommitment" tabindex="-1" role="dialog">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title" id="myModalLabel">New Course Commitment!</h4>
+    </div>
+    <div class="modal-body">
+      <form class="form-inline" role="form">
+        <div>
+        I pledge
+        $ <input type="text" class="form-control"  id="bid" placeholder="100">
+        which is substantial for me
+        </div>
+          <div>
+        to pass
+          <select class="form-control" id="name">
+            <option tal:repeat="current enrollable">${current['topic']['name']}</option>
+          </select>
+        </div>
+          <div>
+        or else shall my money go to
+          <select class="form-control" id="charity_fund">
+            <option tal:repeat="current charity_funds['anticharity']">${current}</option>
+            <option tal:repeat="current charity_funds['charity']">${current}</option>
+          </select>
+        </div>
+          <div>
+          Let my friend
+          <select class="form-control" id="observer">
+            <option value="0">I have no friends</option>
+            <option tal:repeat="current list_users">${current.name}</option>
+          </select>
+          witness!
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">I yield</button>
+      <button type="button" class="btn btn-primary">So be it!</button>
+    </div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
