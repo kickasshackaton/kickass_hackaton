@@ -15,6 +15,10 @@ def main(global_config, **settings):
     Base.metadata.bind = engine
     config = Configurator(settings=settings)
     config.add_static_view('static', 'static', cache_max_age=3600)
-    config.add_route('home', '/')
+    config.add_route('home', '/{id}')
+    config.add_route('home_default', '/')
+    config.add_route('add_target', '/add_target')
+    config.add_route('check_course', '/check_course')
+
     config.scan()
     return config.make_wsgi_app()
