@@ -51,8 +51,8 @@ class User(Base):
         self.password = password
         self.money = money
         self.mail = mail
-    def __repr__(self):
-        return "User id: "+str(self.id)+" name: "+ str(self.name) + " targets: " + str(len(self.my_targets)) + " overseered: " + str(len(self.overseered_targets)) +"\n"
+    #def __repr__(self):
+    #    return "User id: "+str(self.id)+" name: "+ str(self.name) + " targets: " + str(len(self.my_targets)) + " overseered: " + str(len(self.overseered_targets)) +"\n"
 
 class Target(Base):
     __tablename__ = 'Target'
