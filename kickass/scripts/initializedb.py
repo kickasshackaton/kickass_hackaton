@@ -42,6 +42,7 @@ def main(argv=sys.argv):
         user3 = User(name="Mama",username="mom",password="123456",mail="mom@mail.ru")
         target1 = Target(name="first course", deadline=datetime.datetime(year=1987,month=10, day=5),bid=100)
         target1.user = user1
+        target1.overseer = user3
         DBSession.add(target1)
         DBSession.add(user1)
         DBSession.add(user2)
