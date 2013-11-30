@@ -65,9 +65,11 @@ def check_target(request):
             coursera_id=parse_coursera_api(request.GET["url"])
             user_to_look= DBSession.query(User).filter(User.id == request.GET["user_id"]).first()
             #target_to_look = user_to_look.my_targets.filter(Target.url == coursera_id).first() #TODO filter to InstrumentedList
+            target_to_look = False
             for target in user_to_look.my_targets:
-                
-            target_to_look = user_to_look.my_targets[0]
+                if(target.url == coursera_id):
+                    target_to_look = user_to_look.my_targets[0]
+            #target_to_look = user_to_look.my_targets[0]
             if(target_to_look):
                 return {"target" : target_to_look}
             else:
