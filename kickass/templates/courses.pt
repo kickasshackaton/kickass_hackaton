@@ -1,6 +1,29 @@
 <div metal:use-macro="layout">
     <div metal:fill-slot="content">
-    Hello!!!
+
+        <div class="container">
+            <div class="row" tal:repeat="current targets" class="pledge-course">
+                <div class="col-3">
+                  <div class="course-name">${current.name}</div>
+                </div>
+                <!--${current.type}-->
+                <!--${current.deadline}-->
+                <div class="col-7">
+                  <div class="progress">
+                      <div class="progress-bar progress-bar-success" style="width:${current.current_progress}%">
+                        <span class="sr-only"></span>
+                      </div>
+                      <div class="progress-bar progress-bar-info" style="width:${current.planned_progress}%">
+                        <span class="sr-only"></span>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div tal:condition="current.overseer.id != current.user.id">${current.overseer}</div>
+                  <div class="bid">${current.bid}</div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>

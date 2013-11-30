@@ -40,25 +40,27 @@ def home(request):
 
     try:
         #one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
-        targets = DBSession.query(User).filter(User.id == request.matchdict["id"]).all()[0].my_targets
+        targets = DBSession.query(User).filter(User.id == request.matchdict["id"]).first().my_targets#.filter(Target.type=="coursera_course").all()
+        list_users = DBSession.query(User).all()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'layout' : site_layout(),'targets' : targets}
+    return {'layout' : site_layout(),'targets' : targets, 'list_users' : list_users}
 
 @view_config(route_name='home_default', renderer='templates/courses.pt')
 def home_default(request):
 
     try:
         #one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
-        targets = DBSession.query(User).filter(User.id == 1).first().my_targets
+        targets = DBSession.query(User).filter(User.id == 1).first().my_targets#.filter(Target.type=="coursera_course").all()
+        list_users = DBSession.query(User).all()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'layout' : site_layout(),'targets' : targets}
+    return {'layout' : site_layout(),'targets' : targets, 'list_users' : list_users}
 
 @view_config(route_name='list_users', renderer='json')
 def list_users(request):
     user_list = DBSession.query(User).all()
-    return user_list#{"list_users" : user_list}
+    return {"user_list": user_list} #{"list_users" : user_list}
 
 def get_enrolled_course_deadline_by_url(url):
     course = get_enrolled_course_by_url(url)
@@ -88,13 +90,26 @@ def check_target(request):
     #  TODO for any target add code
 
     if(request.method == "GET"):
-        coursera_id=parse_coursera_api(request.GET["url"])
-        user_to_look= DBSession.query(User).filter(User.id == "user_id").first()
-        target_to_look = user_to_look.my_targets.filter(Target.url == coursera_id).first()
-        if(target_to_look):
-            return {"target" : target_to_look}
-        else:
-            return {"result" : False}
+        if request.GET["url"] and ("coursera" in request.GET["url"]):
+            coursera_id=parse_coursera_api(request.GET["url"])
+            user_to_look= DBSession.query(User).filter(User.id == request.GET["user_id"]).first()
+            #target_to_look = user_to_look.my_targets.filter(Target.url == coursera_id).first() #TODO filter to InstrumentedList
+            target_to_look = False
+            for target in user_to_look.my_targets:
+                if(target.url == coursera_id):
+                    target_to_look = user_to_look.my_targets[0]
+            #target_to_look = user_to_look.my_targets[0]
+            if(target_to_look):
+                return {"target" : target_to_look}
+            else:
+                return {"result" : False}
+        else: ## IT IS NOT COURSeRAAAAAAAAA TODO
+            user_to_look= DBSession.query(User).filter(User.id == request.GET["user_id"]).first()
+            target_to_look = user_to_look.my_targets.filter(Target.url == request.GET["url"]).first()
+            if(target_to_look):
+                return {"target" : target_to_look}
+            else:
+                return {"result" : False}
     else:
         return {"result" : False}
 

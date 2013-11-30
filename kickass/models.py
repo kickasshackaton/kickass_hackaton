@@ -16,6 +16,7 @@ from sqlalchemy.orm import (
     scoped_session,
     sessionmaker,
     )
+import time
 
 from zope.sqlalchemy import ZopeTransactionExtension
 
@@ -51,8 +52,12 @@ class User(Base):
         self.password = password
         self.money = money
         self.mail = mail
-    #def __repr__(self):
-    #    return "User id: "+str(self.id)+" name: "+ str(self.name) + " targets: " + str(len(self.my_targets)) + " overseered: " + str(len(self.overseered_targets)) +"\n"
+    def __repr__(self):
+        return {"id" : self.id,"name" : self.name, "money" : self.money, "mail" : self.mail}.__str__()
+    def __json__(self,request):
+        return {"id" : self.id,"name" : self.name, "money" : self.money, "mail" : self.mail}
+
+        #return "User id: "+str(self.id)+" name: "+ str(self.name) + " targets: " + str(len(self.my_targets)) + " overseered: " + str(len(self.overseered_targets)) +"\n"
 
 class Target(Base):
     __tablename__ = 'Target'
@@ -70,6 +75,13 @@ class Target(Base):
 
     user = relationship('User', back_populates='my_targets', foreign_keys=[user_id])
     overseer = relationship('User', back_populates='overseered_targets', foreign_keys=[overseer_id])
+    def __json__(self, request):
+        return {"id":self.id, "name" : self.name , "type" : self.type, "url" : self.url,
+                "deadline" : time.mktime(self.deadline.timetuple()) ,
+                "bid" : self.bid,
+                "current_progress" : self.current_progress,
+                "planned_progress" : self.planned_progress
+        }
 
     def __init__(self, name, deadline, bid, url, planned_progress = 0,current_progress = 0, type = "coursera_course"):
         self.name = name
