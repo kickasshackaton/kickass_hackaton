@@ -3,7 +3,10 @@ from sqlalchemy import (
     Index,
     Integer,
     Text,
+    Float,
+    DateTime,
     )
+from sqlalchemy.orm import relationship, backref
 
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -29,3 +32,20 @@ class MyModel(Base):
         self.value = value
 
 Index('my_index', MyModel.name, unique=True, mysql_length=255)
+
+class User(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    name = Column(Text)
+    username = Column(Text)
+    password = Column(Text)
+    money = Column(Float)
+    mail = Column(Text)
+    targets = relationship('Target', backref='user')
+
+class Target(Base):
+    __tablename__ = 'target'
+    id = Column(Integer, primary_key=True)
+    name = Column(Text)
+    
+
