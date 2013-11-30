@@ -46,12 +46,17 @@ def home_default(request):
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
     return {'layout' : site_layout(),'targets' : targets}
 
-@view_config(route_name='check_course', renderer='json')
-def check_course(request):
+@view_config(route_name='list_users', renderer='json')
+def list_users(request):
+    user_list = DBSession.query(User).all()
+    return user_list#{"list_users" : user_list}
+
+@view_config(route_name='check_target', renderer='json')
+def check_target(request):
 
     # in user_id , url from coursera
     # out Target or False
-    #
+    #  TODO for any target add code
 
     if(request.method == "GET"):
         coursera_id=parse_coursera_api(request.GET["url"])
