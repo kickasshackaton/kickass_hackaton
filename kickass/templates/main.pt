@@ -87,7 +87,7 @@
                   Let my friend
                   <select class="form-control" id="observer">
                     <option value="0">I have no friends</option>
-                    <option tal:repeat="current list_user">${current.name}</option>
+                    <option tal:repeat="current list_users">${current.name}</option>
                   </select>
                   witness!
                 </div>
