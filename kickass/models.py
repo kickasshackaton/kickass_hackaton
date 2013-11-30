@@ -51,7 +51,7 @@ class User(Base):
         self.money = money
         self.mail = mail
     def __repr__(self):
-        return "User id: "+str(self.id)+" name: "+ str(self.money) + " targets: "# + self.targets +"\n"
+        return "User id: "+str(self.id)+" name: "+ str(self.name) + " targets: "# + self.targets +"\n"
 
 class Target(Base):
     __tablename__ = 'Target'
@@ -66,6 +66,7 @@ class Target(Base):
 
     user = relationship('User', back_populates='my_targets', foreign_keys=[user_id])
     overseer = relationship('User', back_populates='overseered_targets', foreign_keys=[overseer_id])
+
     def __init__(self, name, deadline, bid, type = "coursera_course"):
         self.name = name
         self.type = type
