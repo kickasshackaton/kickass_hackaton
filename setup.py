@@ -14,6 +14,8 @@ requires = [
     'pyramid_debugtoolbar',
     'zope.sqlalchemy',
     'waitress',
+    'beautifulsoup4',
+    'requests'
     ]
 
 setup(name='kickass',
