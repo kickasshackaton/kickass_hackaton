@@ -87,6 +87,16 @@ def get_enrolled_course_by_url(url):
                     item if item['topic_id'] == topic['id'] and item['id'] in enrollmentCoursesId else result
         ,courses, None)
 
+def get_enrollable_courses():
+    courseraApi = CourseraApi('ilya@nikans.ru','$e(ureP@66')
+    listingCombined = courseraApi.listingCombined()
+    topics = listingCombined['list2']['topics']
+    courses = listingCombined['list2']['courses']
+    return map(lambda result, item:
+                    { "course" : item, "topic": topics[item['topic_id']] }
+        ,courses)
+
+
 @view_config(route_name='check_target', renderer='json')
 def check_target(request):
 
