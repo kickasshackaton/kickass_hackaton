@@ -19,6 +19,13 @@ def site_layout():
     layout = renderer.implementation().macros['layout']
     return layout
 
+def parse_coursera_api(url):
+    mypath = urlsplit(url)[2]
+    mypath = "/"+mypath
+    url = path.basename(mypath)
+    return url
+
+
 @view_config(route_name='home', renderer='templates/courses.pt')
 def home(request):
 
@@ -42,22 +49,26 @@ def home_default(request):
 @view_config(route_name='check_course', renderer='json')
 def check_course(request):
 
-    # in user.id , url from coursera
+    # in user_id , url from coursera
     # out Target or False
     #
 
-    return {"result" : True}
+    if(request.method == "GET"):
+        coursera_id=parse_coursera_api(request.GET["url"])
+        user_to_look= DBSession.query(User).filter(User.id == "user_id").first()
+        target_to_look = user_to_look.my_targets.filter(Target.url == coursera_id).first()
+        if(target_to_look):
+            return {"target" : target_to_look}
+        else:
+            return {"result" : False}
+    else:
+        return {"result" : False}
 
-def parse_coursera_api(url):
-    mypath = urlsplit(url)[2]
-    mypath = "/"+mypath
-    url = path.basename(mypath)
-    return url
+
 
 @view_config(route_name='add_target', renderer='json')
 def add_target(request):
     if(request.method == "POST"):
-
         if(request.POST["type"]):
             new_target = Target(
                 name=request.POST["name"],
