@@ -25,6 +25,18 @@ def home(request):
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
     return {'layout' : site_layout(),'targets' : targets}
 
+@view_config(route_name='home_default', renderer='templates/courses.pt')
+def home_default(request):
+
+    try:
+        #one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
+        targets = DBSession.query(User).filter(User.id == 1).all()[0].my_targets
+    except DBAPIError:
+        return Response(conn_err_msg, content_type='text/plain', status_int=500)
+    return {'layout' : site_layout(),'targets' : targets}
+
+
+
 conn_err_msg = """\
 Pyramid is having a problem using your SQL database.  The problem
 might be caused by one of the following things:
