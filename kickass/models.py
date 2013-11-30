@@ -16,6 +16,7 @@ from sqlalchemy.orm import (
     scoped_session,
     sessionmaker,
     )
+import time
 
 from zope.sqlalchemy import ZopeTransactionExtension
 
@@ -74,6 +75,13 @@ class Target(Base):
 
     user = relationship('User', back_populates='my_targets', foreign_keys=[user_id])
     overseer = relationship('User', back_populates='overseered_targets', foreign_keys=[overseer_id])
+    def __json__(self, request):
+        return {"id":self.id, "name" : self.name , "type" : self.type, "url" : self.url,
+                "deadline" : time.mktime(self.deadline.timetuple()) ,
+                "bid" : self.bid,
+                "current_progress" : self.current_progress,
+                "planned_progress" : self.planned_progress
+        }
 
     def __init__(self, name, deadline, bid, url, planned_progress = 0,current_progress = 0, type = "coursera_course"):
         self.name = name

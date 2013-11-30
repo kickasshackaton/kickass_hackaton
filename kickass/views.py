@@ -31,7 +31,7 @@ def home(request):
 
     try:
         #one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
-        targets = DBSession.query(User).filter(User.id == request.matchdict["id"]).all()[0].my_targets
+        targets = DBSession.query(User).filter(User.id == request.matchdict["id"]).first().my_targets#.filter(Target.type=="coursera_course").all()
         list_users = DBSession.query(User).all()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
@@ -42,7 +42,7 @@ def home_default(request):
 
     try:
         #one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
-        targets = DBSession.query(User).filter(User.id == 1).first().my_targets
+        targets = DBSession.query(User).filter(User.id == 1).first().my_targets#.filter(Target.type=="coursera_course").all()
         list_users = DBSession.query(User).all()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
@@ -64,7 +64,10 @@ def check_target(request):
         if request.GET["url"] and ("coursera" in request.GET["url"]):
             coursera_id=parse_coursera_api(request.GET["url"])
             user_to_look= DBSession.query(User).filter(User.id == request.GET["user_id"]).first()
-            target_to_look = user_to_look.my_targets.filter(Target.url == coursera_id).first()
+            #target_to_look = user_to_look.my_targets.filter(Target.url == coursera_id).first() #TODO filter to InstrumentedList
+            for target in user_to_look.my_targets:
+                
+            target_to_look = user_to_look.my_targets[0]
             if(target_to_look):
                 return {"target" : target_to_look}
             else:
