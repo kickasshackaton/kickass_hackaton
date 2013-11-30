@@ -32,9 +32,10 @@ def home(request):
     try:
         #one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
         targets = DBSession.query(User).filter(User.id == request.matchdict["id"]).all()[0].my_targets
+        list_users = DBSession.query(User).all()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'layout' : site_layout(),'targets' : targets}
+    return {'layout' : site_layout(),'targets' : targets, 'list_users' : list_users}
 
 @view_config(route_name='home_default', renderer='templates/courses.pt')
 def home_default(request):
@@ -60,7 +61,7 @@ def check_target(request):
     #  TODO for any target add code
 
     if(request.method == "GET"):
-        if "coursera" in request.GET["url"]:
+        if request.GET["url"] and ("coursera" in request.GET["url"]):
             coursera_id=parse_coursera_api(request.GET["url"])
             user_to_look= DBSession.query(User).filter(User.id == request.GET["user_id"]).first()
             target_to_look = user_to_look.my_targets.filter(Target.url == coursera_id).first()
@@ -69,7 +70,12 @@ def check_target(request):
             else:
                 return {"result" : False}
         else: ## IT IS NOT COURSeRAAAAAAAAA TODO
-            return {"result" : False}
+            user_to_look= DBSession.query(User).filter(User.id == request.GET["user_id"]).first()
+            target_to_look = user_to_look.my_targets.filter(Target.url == request.GET["url"]).first()
+            if(target_to_look):
+                return {"target" : target_to_look}
+            else:
+                return {"result" : False}
     else:
         return {"result" : False}
 

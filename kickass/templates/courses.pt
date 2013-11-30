@@ -1,6 +1,11 @@
 <div metal:use-macro="layout">
     <div metal:fill-slot="content">
-    Hello!!!
 
+    Hello
+    <ul>
+        <li tal:repeat="current targets">
+            name ${current.name} - type ${current.type} - deadline ${current.deadline} - bid ${current.bid} - currprogress ${current.current_progress} - plannedprogress ${current.planned_progress}
+        </li>
+    </ul>
     </div>
 </div>
