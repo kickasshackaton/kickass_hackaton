@@ -4,6 +4,7 @@
 html,
 body {
     height: 100%;
+    font-family:"Open Sans", "Helvetica", "Arial", sans; font-weight:300;
     /* The html and body elements cannot have any padding or margin. */
 }
 
@@ -31,3 +32,47 @@ body {
 
     box-shadow:1px 0 1px #d0cdcd;
 }
+
+.courses-list {
+    margin-top:50px; margin-bottom:50px;
+}
+
+.courses-list header {
+    margin-bottom:30px;
+}
+
+.courses-list header h1 {
+    display: inline; font-size:24px;
+}
+.courses-list header a {
+    font-size:20px; color:#9d9d9d;
+}
+
+.courses-list .course-name {
+    font-size:18px;
+}
+
+.courses-list .overseer {
+}
+
+.courses-list .bid {
+    margin-left:15px;
+}
+
+.courses-list .overseer, .courses-list .bid {
+    margin-top:-7px;
+}
+
+#newCourseCommitment {
+    font-size:18px;
+}
+
+#newCourseCommitment input {
+    width:auto;
+}
+
+#newCourseCommitment #name { width:454px; }
+#newCourseCommitment #charity_fund { width:279px; }
+#newCourseCommitment #observer { width:333px; }
+
+#newCourseCommitment div { margin-bottom:20px; }

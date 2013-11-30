@@ -1,14 +1,21 @@
 <div metal:use-macro="layout">
     <div metal:fill-slot="content">
 
-        <div class="container">
+        <div class="container courses-list">
+            <header class="row" tal:repeat="current targets" class="pledge-course">
+                <div class="col-lg-3 col-xs-3"><h1>My Commitments</h1></div>
+                <div class="col-lg-9 col-xs-9">
+                    <a href="#" data-toggle="modal" data-target="#newCourseCommitment">New Course Commitment!</a>
+                </div>
+            </header>
+
             <div class="row" tal:repeat="current targets" class="pledge-course">
-                <div class="col-3">
+                <div class="col-lg-3 col-xs-3">
                   <div class="course-name">${current.name}</div>
                 </div>
                 <!--${current.type}-->
                 <!--${current.deadline}-->
-                <div class="col-7">
+                <div class="col-lg-7 col-xs-7">
                   <div class="progress">
                       <div class="progress-bar progress-bar-success" style="width:${current.current_progress}%">
                         <span class="sr-only"></span>
@@ -18,9 +25,9 @@
                       </div>
                   </div>
                 </div>
-                <div class="col-2">
-                  <div tal:condition="current.overseer.id != current.user.id">${current.overseer}</div>
-                  <div class="bid">${current.bid}</div>
+                <div class="col-lg-2 col-xs-2">
+                  <div tal:condition="current.overseer.id != current.user.id" class="overseer pull-left"><img src="/static/assets/img/userpic-small.png" /></div>
+                  <a class="bid btn btn-success">$${int(current.bid)}</a>
                 </div>
             </div>
         </div>

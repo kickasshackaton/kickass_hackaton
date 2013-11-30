@@ -51,52 +51,55 @@
 
       <div metal:define-slot="content"></div>
 
-      <!-- Button trigger modal -->
-          <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-            Добавить типа челенж чтоль
-          </button>
-
-          <!-- Modal -->
-          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4 class="modal-title" id="myModalLabel">Add target</h4>
+      <!-- Modal -->
+      <div class="modal fade" id="newCourseCommitment" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">New Course Commitment!</h4>
+            </div>
+            <div class="modal-body">
+              <form class="form-inline" role="form">
+                <div>
+                I pledge
+                $ <input type="password" class="form-control"  id="bid" placeholder="100">
+                which is substantial for me
                 </div>
-                <div class="modal-body">
-                  <form role="form">
-                    <div class="form-group">
-                      <label for="url">Course/page URL</label>
-                      <input type="text" class="form-control" id="url" placeholder="Enter page/course URL">
-                    </div>
-                    <div class="form-group">
-                      <label for="name">Target name</label>
-                      <input type="text" class="form-control" id="name" placeholder="Enter name for the target">
-                    </div>
-                    <div class="form-group">
-                      <label for="user">User</label>
-                      <select class="form-control">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="bid">Bid</label>
-                      <input type="text" class="form-control" id="bid" placeholder="50">
-                    </div>
-                  </form>
+                  <div>
+                to pass
+                  <select class="form-control" id="name">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Add target</button>
+                  <div>
+                or else shall my money go to
+                  <select class="form-control" id="charity_fund">
+                    <option tal:repeat="current charity_funds">${current}</option>
+                      <option tal:repeat="current charity_funds">${current}</option>
+                  </select>
                 </div>
-              </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-          </div><!-- /.modal -->
+                  <div>
+                  Let my friend
+                  <select class="form-control" id="observer">
+                    <option value="0">I have no friends</option>
+                    <option tal:repeat="current list_user">${current.name}</option>
+                  </select>
+                  witness!
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Add target</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
     </div>
     <div id="footer">Eat shit</div>
 
