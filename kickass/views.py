@@ -42,9 +42,10 @@ def home_default(request):
     try:
         #one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
         targets = DBSession.query(User).filter(User.id == 1).first().my_targets
+        list_users = DBSession.query(User).all()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'layout' : site_layout(),'targets' : targets}
+    return {'layout' : site_layout(),'targets' : targets, 'list_users' : list_users}
 
 @view_config(route_name='list_users', renderer='json')
 def list_users(request):
@@ -67,7 +68,7 @@ def check_target(request):
                 return {"target" : target_to_look}
             else:
                 return {"result" : False}
-        else: ## IT IS NOT COURSRAAAAAAAAA
+        else: ## IT IS NOT COURSeRAAAAAAAAA TODO
             return {"result" : False}
     else:
         return {"result" : False}

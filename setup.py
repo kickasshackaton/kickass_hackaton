@@ -15,7 +15,8 @@ requires = [
     'zope.sqlalchemy',
     'waitress',
     'beautifulsoup4',
-    'requests'
+    'requests',
+    'pyramid_chameleon'
     ]
 
 setup(name='kickass',
