@@ -22,5 +22,6 @@ def main(global_config, **settings):
     config.add_route('check_target', '/check_target')
     config.add_route('list_users', '/list_users')
     config.add_route('get_charity_funds','/get_charity_funds')
+    config.add_route('get_enrollable','/get_enrollable')
     config.scan()
     return config.make_wsgi_app()

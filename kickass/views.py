@@ -92,9 +92,9 @@ def get_enrollable_courses():
     listingCombined = courseraApi.listingCombined()
     topics = listingCombined['list2']['topics']
     courses = listingCombined['list2']['courses']
-    return map(lambda result, item:
+    return list(map(lambda item:
                     { "course" : item, "topic": topics[item['topic_id']] }
-        ,courses)
+        ,courses))
 
 
 @view_config(route_name='check_target', renderer='json')
@@ -168,6 +168,11 @@ def add_target(request):
 @view_config(route_name='get_charity_funds', renderer='json')
 def get_charity_funds(request):
     return charity_funds
+
+@view_config(route_name='get_enrollable', renderer='json')
+def get_enrollable(request):
+    return get_enrollable_courses()
+
 
 
 
