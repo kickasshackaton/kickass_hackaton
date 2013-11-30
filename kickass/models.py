@@ -59,6 +59,7 @@ class Target(Base):
     id = Column(Integer, primary_key=True)
     name = Column(Text)
     type = Column(Text)
+    url = Column(Text)
     deadline = Column(DateTime)
     bid = Column(Float)
     current_progress = Column(Integer)
@@ -70,9 +71,12 @@ class Target(Base):
     user = relationship('User', back_populates='my_targets', foreign_keys=[user_id])
     overseer = relationship('User', back_populates='overseered_targets', foreign_keys=[overseer_id])
 
-    def __init__(self, name, deadline, bid, type = "coursera_course"):
+    def __init__(self, name, deadline, bid, url, planned_progress = 0,current_progress = 0, type = "coursera_course"):
         self.name = name
         self.type = type
         self.deadline = deadline
         self.bid = bid
+        self.current_progress = current_progress
+        self.planned_progress = planned_progress
+        self.url = url
 

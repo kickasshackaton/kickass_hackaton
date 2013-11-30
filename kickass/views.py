@@ -2,6 +2,10 @@ from pyramid.response import Response
 from pyramid.view import view_config
 from pyramid.renderers import get_renderer
 from sqlalchemy.exc import DBAPIError
+from datetime import datetime
+from urllib.parse import urlsplit
+from os import path
+
 
 from .models import (
     DBSession,
@@ -30,10 +34,52 @@ def home_default(request):
 
     try:
         #one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
-        targets = DBSession.query(User).filter(User.id == 1).all()[0].my_targets
+        targets = DBSession.query(User).filter(User.id == 1).first().my_targets
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
     return {'layout' : site_layout(),'targets' : targets}
+
+@view_config(route_name='check_course', renderer='json')
+def check_course(request):
+
+    # in user.id , url from coursera
+    # out Target or False
+    #
+
+    return {"result" : True}
+
+def parse_coursera_api(url):
+    mypath = urlsplit(url)[2]
+    mypath = "/"+mypath
+    url = path.basename(mypath)
+    return url
+
+@view_config(route_name='add_target', renderer='json')
+def add_target(request):
+    if(request.method == "POST"):
+
+        if(request.POST["type"]):
+            new_target = Target(
+                name=request.POST["name"],
+                deadline=datetime.fromtimestamp(12345566),
+                bid=request.POST["bid"],
+                url=request.POST["url"]
+            )
+            new_target.type = request.POST["type"]
+        else:
+            new_target = Target(
+                name=request.POST["name"],
+                deadline=datetime.fromtimestamp(12345566),#TODO parse from coursera
+                bid=request.POST["bid"],
+                url=parse_coursera_api(request.POST["url"])
+            )
+        DBSession.add(new_target)
+        new_target.user = DBSession.query(User).filter(User.id == request.POST["user"]).first()
+        new_target.overseer = DBSession.query(User).filter(User.id == request.POST["overseer"]).first()
+
+    return {"Status" : "OK"}
+
+
 
 
 
