@@ -2,10 +2,19 @@ from pyramid.response import Response
 from pyramid.view import view_config
 from pyramid.renderers import get_renderer
 from sqlalchemy.exc import DBAPIError
-from datetime import datetime
+from datetime import (
+    datetime,
+    timedelta
+    )
 from urllib.parse import urlsplit
 from os import path
 
+import json
+from functools import reduce
+
+from .kick import (
+    CourseraApi
+)
 
 from .models import (
     DBSession,
@@ -51,6 +60,26 @@ def list_users(request):
     user_list = DBSession.query(User).all()
     return user_list#{"list_users" : user_list}
 
+def get_enrolled_course_deadline_by_url(url):
+    course = get_enrolled_course_by_url(url)
+    course['weeks'] = int(course['duration_string'].partition(' ')[0])
+    return datetime(course['start_year'], course['start_month'], course['start_day']) + timedelta(weeks = course['weeks'])
+
+def get_enrolled_course_by_url(url):
+    courseraApi = CourseraApi('ilya@nikans.ru','$e(ureP@66')
+    listingCombined = courseraApi.listingCombined()
+    topics = listingCombined['list2']['topics']
+    courses = listingCombined['list2']['courses']
+    enrollmentCoursesId = list(map(lambda enrollment:
+                    enrollment['course_id']
+        ,listingCombined['enrollments']))
+    topic = reduce(lambda result, itemKey:
+                    topics[itemKey] if topics[itemKey]['short_name'] == url else result
+        ,topics, None)
+    return reduce(lambda result, item:
+                    item if item['topic_id'] == topic['id'] and item['id'] in enrollmentCoursesId else result
+        ,courses, None)
+
 @view_config(route_name='check_target', renderer='json')
 def check_target(request):
 
@@ -73,25 +102,26 @@ def check_target(request):
 
 @view_config(route_name='add_target', renderer='json')
 def add_target(request):
-    if(request.method == "POST"):
-        if(request.POST["type"]):
+    if(request.method == "GET"):
+        if(request.GET.has_key("type")):
             new_target = Target(
-                name=request.POST["name"],
+                name=request.GET["name"],
                 deadline=datetime.fromtimestamp(12345566),
-                bid=request.POST["bid"],
-                url=request.POST["url"]
+                bid=request.GET["bid"],
+                url=request.GET["url"]
             )
-            new_target.type = request.POST["type"]
+            new_target.type = request.GET["type"]
         else:
+            url = parse_coursera_api(request.GET["url"])
             new_target = Target(
-                name=request.POST["name"],
-                deadline=datetime.fromtimestamp(12345566),#TODO parse from coursera
-                bid=request.POST["bid"],
-                url=parse_coursera_api(request.POST["url"])
+                name=request.GET["name"],
+                deadline=get_enrolled_course_deadline_by_url(url),
+                bid=request.GET["bid"],
+                url=url
             )
         DBSession.add(new_target)
-        new_target.user = DBSession.query(User).filter(User.id == request.POST["user"]).first()
-        new_target.overseer = DBSession.query(User).filter(User.id == request.POST["overseer"]).first()
+        new_target.user = DBSession.query(User).filter(User.id == request.GET["user"]).first()
+        new_target.overseer = DBSession.query(User).filter(User.id == request.GET["overseer"]).first()
 
     return {"Status" : "OK"}
 
