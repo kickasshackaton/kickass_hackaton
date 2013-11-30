@@ -45,7 +45,7 @@ def home(request):
         list_users = DBSession.query(User).all()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'layout' : site_layout(),'targets' : targets, 'list_users' : list_users, 'charity_funds' : charity_funds}
+    return {'layout' : site_layout(),'targets' : targets, 'list_users' : list_users, 'charity_funds' : charity_funds, "enrollable":get_enrollable_courses()}
 
 @view_config(route_name='home_default', renderer='templates/courses.pt')
 def home_default(request):
@@ -56,7 +56,7 @@ def home_default(request):
         list_users = DBSession.query(User).all()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'layout' : site_layout(),'targets' : targets, 'list_users' : list_users, 'charity_funds' : charity_funds}
+    return {'layout' : site_layout(),'targets' : targets, 'list_users' : list_users, 'charity_funds' : charity_funds, "enrollable":get_enrollable_courses()}
 
 @view_config(route_name='list_users', renderer='json')
 def list_users(request):
@@ -168,6 +168,10 @@ def add_target(request):
 @view_config(route_name='get_charity_funds', renderer='json')
 def get_charity_funds(request):
     return charity_funds
+
+@view_config(route_name='get_enrollable', renderer='json')
+def get_enrollable(request):
+    return get_enrollable_courses()
 
 
 
