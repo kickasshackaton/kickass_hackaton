@@ -1,6 +1,6 @@
 from pyramid.response import Response
 from pyramid.view import view_config
-
+from pyramid.renderers import get_renderer
 from sqlalchemy.exc import DBAPIError
 
 from .models import (
@@ -8,15 +8,18 @@ from .models import (
     MyModel,
     )
 
+def site_layout():
+    renderer = get_renderer("templates/main.pt")
+    layout = renderer.implementation().macros['layout']
+    return layout
 
-@view_config(route_name='home', renderer='templates/main.pt')
+@view_config(route_name='home', renderer='templates/courses.pt')
 def home(request):
     try:
         one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
-
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'one': one, 'project': 'kickass'}
+    return {'layout' : site_layout(),'one': one, 'project': 'kickass'}
 
 conn_err_msg = """\
 Pyramid is having a problem using your SQL database.  The problem
