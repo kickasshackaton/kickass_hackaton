@@ -23,6 +23,8 @@ from zope.sqlalchemy import ZopeTransactionExtension
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 Base = declarative_base()
 
+charity_funds = {"anticharity" :  "for gays",
+                 "charity" : "for starving people"}
 
 class MyModel(Base):
     __tablename__ = 'models'
@@ -72,7 +74,7 @@ class Target(Base):
     #source = Column(Integer, ForeignKey('User.id'))
     user_id = Column(Integer, ForeignKey('User.id'))
     overseer_id = Column(Integer, ForeignKey('User.id'))
-
+    charity_type = Column(Text)
     user = relationship('User', back_populates='my_targets', foreign_keys=[user_id])
     overseer = relationship('User', back_populates='overseered_targets', foreign_keys=[overseer_id])
     def __json__(self, request):
@@ -80,7 +82,8 @@ class Target(Base):
                 "deadline" : time.mktime(self.deadline.timetuple()) ,
                 "bid" : self.bid,
                 "current_progress" : self.current_progress,
-                "planned_progress" : self.planned_progress
+                "planned_progress" : self.planned_progress,
+                "charity_type" : self.charity_type
         }
 
     def __init__(self, name, deadline, bid, url, planned_progress = 0,current_progress = 0, type = "coursera_course"):
