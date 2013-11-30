@@ -60,6 +60,8 @@ class Target(Base):
     type = Column(Text)
     deadline = Column(DateTime)
     bid = Column(Float)
+    current_progress = Column(Integer)
+    planned_progress = Column(Integer)
     #source = Column(Integer, ForeignKey('User.id'))
     user_id = Column(Integer, ForeignKey('User.id'))
     overseer_id = Column(Integer, ForeignKey('User.id'))
