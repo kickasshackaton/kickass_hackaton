@@ -51,7 +51,7 @@ class Target(Base):
     type = Column(Text)
     deadline = Column(DateTime)
     money = Column(Float)
-    source = Column(Integer,ForeignKey('User.id'))
+    source = Column(Integer, ForeignKey('User.id'))
     user_id = Column(Integer, ForeignKey('User.id'))
 
 
