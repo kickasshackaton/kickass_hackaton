@@ -78,6 +78,10 @@ def get_enrolled_course_by_url(url):
     topic = reduce(lambda result, itemKey:
                     topics[itemKey] if topics[itemKey]['short_name'] == url else result
         ,topics, None)
+
+    if topic == None:
+        return topic
+
     return reduce(lambda result, item:
                     item if item['topic_id'] == topic['id'] and item['id'] in enrollmentCoursesId else result
         ,courses, None)
