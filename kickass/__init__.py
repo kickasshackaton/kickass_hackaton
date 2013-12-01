@@ -24,5 +24,6 @@ def main(global_config, **settings):
     config.add_route('get_charity_funds','/get_charity_funds')
     config.add_route('get_enrollable','/get_enrollable')
     config.add_route('watched_courses', '/watched_courses')
+    config.add_route('readed', '/readed')
     config.scan()
     return config.make_wsgi_app()
