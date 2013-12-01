@@ -37,11 +37,11 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Coursera</a></li>
-              <li><a href="#">Read It</a></li>
+              <li class="active"><a href="/my_courses">Coursera</a></li>
+              <li><a href="my_readit">Read It</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#"><strong><span class="glyphicon glyphicon-usd" style="top:2px;"></span>${user.money}</strong></a></li>
+              <li><a href="#"><i class="kick-coin"></i><strong>${int(user.money)}</strong> KickCoin&reg;</a></li>
               <li><a href="#" style="padding-left:0;">Add more</a></li>
               <li><a href="#">${user.name}</a></li>
               <li><a href="#">Sign out</a></li>
@@ -49,7 +49,7 @@
           </div><!-- /.navbar-collapse -->
       </nav>
 
-      <div class="hero-unit"></div>
+      <div class="hero-unit hero-unit-course" ></div>
 
       <div metal:define-slot="content"></div>
 

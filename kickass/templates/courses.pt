@@ -1,7 +1,7 @@
 <div metal:use-macro="layout">
     <div metal:fill-slot="content">
 
-        <div class="container courses-list">
+        <div class="container courses-list targets-list">
             <header class="row">
                 <div class="col-lg-4 col-xs-4"><h1>My Commitments</h1></div>
                 <div class="col-lg-5 col-xs-5">
@@ -12,13 +12,12 @@
                 </div>
             </header>
 
-            <div class="row" tal:repeat="current targets" class="pledge-course">
-                <div class="col-lg-3 col-xs-3">
+            <div class="row pledge pledge-course" tal:repeat="current targets">
+                <div class="col-lg-4 col-xs-4">
                   <div class="course-name">${current.name}</div>
                 </div>
                 <!--${current.type}-->
-                <!--${current.deadline}-->
-                <div class="col-lg-7 col-xs-7">
+                <div class="col-lg-6 col-xs-6">
                   <div class="progress">
                       <div class="progress-bar progress-bar-success" style="width:${current.current_progress}%">
                         <span class="sr-only"></span>
@@ -39,7 +38,7 @@
 
 
         <!-- Modal -->
-        <div class="modal fade" id="newCourseCommitment" tabindex="-1" role="dialog">
+        <div class="modal fade new-target-modal" id="newCourseCommitment" tabindex="-1" role="dialog">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -47,7 +46,7 @@
               <h4 class="modal-title" id="myModalLabel">New Course Commitment!</h4>
             </div>
             <div class="modal-body">
-              <form class="form-inline" role="form" id="newCourseCommitmentForm" method="POST" action="/add_target">
+              <form class="form-inline new-target-modal-form" role="form" id="newCourseCommitmentForm" method="POST" action="/add_target">
                 <div>
                 I pledge
                 $ <input type="text" class="form-control" name="bid"  id="bid" placeholder="100">
@@ -74,6 +73,10 @@
                     <option tal:repeat="current list_overseers" value="${current}">${current.name}</option>
                   </select>
                   witness!
+                </div>
+
+                <div>
+                    <div metal:use-macro="new_target_payment_method"></div>
                 </div>
               </form>
             </div>

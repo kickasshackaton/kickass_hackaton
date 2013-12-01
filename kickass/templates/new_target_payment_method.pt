@@ -1,0 +1,17 @@
+<div metal:define-macro="new_target_payment_method">
+    <h4>Pledge money</h4>
+    <div class="radio">
+      <label>
+        <input type="radio" name="paymentMethod" id="account" value="account" checked>
+        Pledge KickCoin&reg;  (current amount — <i class="kick-coin"></i>${int(user.money)})
+      </label>
+    </div>
+    <br /><br />
+    <strong>Buy more <i class="kick-coin"></i>KickCoin&reg;</strong><br />
+    <div class="radio">
+      <label>
+        <input type="radio" name="paymentMethod" id="addMoney" value="addMoney">
+        <img src="/static/assets/img/paypal.gif" />
+      </label>
+    </div>
+</div>

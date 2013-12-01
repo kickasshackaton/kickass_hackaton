@@ -29,23 +29,24 @@ body {
 
 .hero-unit {
     height:485px;
-    background:#eceeee url(../img/hero-unit.png) top center no-repeat;
-
     box-shadow:0px 1px 1px #e0e0e0;
 }
+.hero-unit.hero-unit-course {
+    background:#eceeee url(../img/hero-unit.png) top center no-repeat;
+}
 
-.courses-list {
+.targets-list {
     margin-top:50px; margin-bottom:50px;
 }
 
-.courses-list header {
+.targets-list header {
     margin-bottom:30px;
 }
 
-.courses-list header h1 {
+.targets-list header h1 {
     display: inline; font-size:24px;
 }
-.courses-list header a {
+.targets-list header a {
     font-size:20px; color:#9d9d9d;
 }
 
@@ -68,22 +69,25 @@ body {
     margin-bottom:3px;
 }
 
-#newCourseCommitment {
-    font-size:18px;
+.pledge {
+    margin-bottom:15px;
 }
 
-#newCourseCommitment input {
-    width:auto;
-}
+.new-target-modal { font-size:18px; }
+.new-target-modal input { width:auto; }
+.new-target-modal-form > div { margin-bottom:20px; }
+.new-target-modal label { font-weight:300; }
+.new-target-modal .modal-body { padding-bottom:0; }
 
 #newCourseCommitment #name { width:454px; }
 #newCourseCommitment #charity_type { width:279px; }
 #newCourseCommitment #overseer { width:333px; }
 #newCourseCommitment #user { width:490px; }
 
-#newCourseCommitment div { margin-bottom:20px; }
-
-
+#newReaditCommitment #url { width:100%; }
+#newReaditCommitment #charity_type { width:298px; }
+#newReaditCommitment #overseer { width:346px; }
+#newReaditCommitment #bid { width:52px; }
 
 select {
     margin: 0;
@@ -112,3 +116,14 @@ select {
     /*width:8px; height:10px;*/
     /*content:'';*/
 /*}*/
+
+i.kick-coin {
+    width:24px; height:24px;
+    background:url(../img/fist-24.png) top left no-repeat;
+    display: inline-block;
+    margin-bottom: -9px;
+    margin-right: 0px;
+    opacity: 0.6;
+    top: -3px;
+    position: relative;
+}

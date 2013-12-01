@@ -9,12 +9,12 @@
                 </div>
             </header>
 
-            <div class="row" tal:repeat="current targets" class="pledge-readit">
-                <div class="col-lg-3 col-xs-3">
+            <div class="row pledge pledge-readit" tal:repeat="current targets">
+                <div class="col-lg-4 col-xs-4">
                   <div class="readit-name">${current.name}</div>
                 </div>
                 <!--${current.type}-->
-                <div class="col-lg-7 col-xs-7">
+                <div class="col-lg-6 col-xs-6">
                   <div class="progress">
                       <div class="progress-bar progress-bar-success" style="width:${current.current_progress}%">
                         <span class="sr-only"></span>
