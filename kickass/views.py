@@ -70,7 +70,7 @@ def get_course_deadline(course):
     return datetime(course['start_year'], course['start_month'], course['start_day']) + timedelta(weeks = course['weeks'])
 
 def get_enrolled_course_deadline_by_url(url):
-    return get_course_deadline(get_enrolled_course_by_url(url))
+    return get_course_deadline(get_enrolled_course_by_url(url)['course'])
 
 def get_enrolled_course_by_url(url):
     courseraApi = CourseraApi('ilya@nikans.ru','$e(ureP@66')
@@ -88,7 +88,7 @@ def get_enrolled_course_by_url(url):
         return topic
 
     return reduce(lambda result, item:
-                    item if item['topic_id'] == topic['id'] and item['id'] in enrollmentCoursesId else result
+                    {'course' : item, 'topic' : topic} if item['topic_id'] == topic['id'] and item['id'] in enrollmentCoursesId else result
         ,courses, None)
 
 def filter_non_unique_courses(courses):
