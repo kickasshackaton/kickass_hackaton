@@ -56,15 +56,16 @@ body {
 }
 
 .courses-list .course-name { font-size:18px; }
-.targets-list .overseer {}
+.targets-list .overseer { display:inline-block; }
 .targets-list .bid { margin-left:15px; }
-.targets-list .overseer, .targets-list .bid { margin-top:-3px; }
+.targets-list .overseer, .targets-list .bid { top: -5px; position: relative; }
 
-.courses-list .progress { margin-bottom:3px; }
+.targets-list .progress { margin-bottom:6px; top: 4px; position: relative; }
+.targets-list .control-block { text-align:right; }
 
 .readit-list .time-left { display:inline-block; }
 .readit-list .deadline { display:inline-block; }
-.readit-list .progress { margin:0px 10px; display:inline-block; width:100px; top: 5px; position: relative; }
+.readit-list .progress { margin:0px 10px; display:inline-block; width:100px; }
 
 
 .pledge {

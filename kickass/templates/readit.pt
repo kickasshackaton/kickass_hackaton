@@ -27,8 +27,8 @@
 
                     <div class="readit-name"><span class="glyphicon glyphicon-book"></span> <a href="${current.url}">${current.name}</a></div>
                   </div>
-                <div class="col-lg-2 col-xs-2">
-                  <div tal:condition="current.overseer.id != current.user.id" class="overseer pull-left"><img src="/static/assets/img/userpic-small.png" /></div>
+                <div class="col-lg-2 col-xs-2 control-block">
+                  <div tal:condition="current.overseer.id != current.user.id" class="overseer"><img src="/static/assets/img/userpic-small.png" /></div>
                   <a class="bid btn btn-success">$${int(current.bid)}</a>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                   <input type="text" class="form-control" name="url"  id="url" placeholder="http://" />
                 </div>
                   <div id="name"><span></span>
-                      <input type="hidden" name="name" value="" />
+                      <input type="hidden" name="name" id="nameField" value="no title" />
                   </div>
                   <div style="text-align:center;">
                   in
@@ -107,12 +107,17 @@
         $(function(){
             $('#newReaditCommitment').on('change keyup mouseup', '#url', function(e){
             $.get( '/get_name_url?url='+encodeURIComponent( $(this).val() ), function( data ) {
-                if(data.length > 0)
+                if(data.length > 0) {
                     $('#name').find('span').text('“'+data+'”');
-                else
+                    $('#nameField').val(data);
+                }
+                else {
                     $('#name').find('span').text('');
+                    $('#nameField').val('no title');
+                }
             }).fail(function() {
                 $('#name').find('span').text('');
+                $('#nameField').val('no title');
             });
         })
 
