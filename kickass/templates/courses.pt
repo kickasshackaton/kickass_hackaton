@@ -27,7 +27,7 @@
                         <span class="sr-only"></span>
                       </div>
                   </div>
-                    <div class="deadline pull-right">${current.current_progress}</div>
+                    <div class="deadline pull-right">${current.deadline}</div>
                   <div class="time-left">3 weeks 4 hours left</div>
                 </div>
                 <div class="col-lg-2 col-xs-2">
