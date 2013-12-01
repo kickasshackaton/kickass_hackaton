@@ -65,10 +65,12 @@ def list_users(request):
     user_list = DBSession.query(User).all()
     return {"user_list": user_list} #{"list_users" : user_list}
 
-def get_enrolled_course_deadline_by_url(url):
-    course = get_enrolled_course_by_url(url)
+def get_course_deadline(course):
     course['weeks'] = int(course['duration_string'].partition(' ')[0])
     return datetime(course['start_year'], course['start_month'], course['start_day']) + timedelta(weeks = course['weeks'])
+
+def get_enrolled_course_deadline_by_url(url):
+    return get_course_deadline(get_enrolled_course_by_url(url))
 
 def get_enrolled_course_by_url(url):
     courseraApi = CourseraApi('ilya@nikans.ru','$e(ureP@66')
@@ -89,11 +91,27 @@ def get_enrolled_course_by_url(url):
                     item if item['topic_id'] == topic['id'] and item['id'] in enrollmentCoursesId else result
         ,courses, None)
 
+def filter_non_unique_courses(courses):
+    unique = []
+    result = []
+
+    for course in courses:
+        if course['topic_id'] not in unique:
+            unique.append(course['topic_id'])
+            result.append(course)
+
+    return result
+
+def filter_past_courses(course):
+    return course['start_year'] != None and get_course_deadline(course) > datetime.now()
+
+
 def get_enrollable_courses():
     courseraApi = CourseraApi('ilya@nikans.ru','$e(ureP@66')
     listingCombined = courseraApi.listingCombined()
     topics = listingCombined['list2']['topics']
-    courses = listingCombined['list2']['courses']
+    courses = filter_non_unique_courses(listingCombined['list2']['courses'])
+    courses = filter(filter_past_courses, courses);
     return list(map(lambda item:
                     { "course" : item, "topic": topics[str(item['topic_id'])] }
         ,courses))
