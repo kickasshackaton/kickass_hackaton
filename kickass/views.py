@@ -34,12 +34,12 @@ def parse_coursera_api(url):
     return url
 
 
-@view_config(route_name='readed', renderer='templates/readed.pt')
+@view_config(route_name='readit', renderer='templates/readit.pt')
 def readed(request):
     try:
         #one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
         targets = DBSession.query(User).filter(User.id == 1).first().my_targets# TODO Hardcoded user.id
-        #list_users = DBSession.query(User).all()
+        list_users = DBSession.query(User).all()
         out_targets = []
         for target in targets:
             if target.type != "coursera_course":
@@ -47,7 +47,8 @@ def readed(request):
         user = DBSession.query(User).filter(User.id == 1).first()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'layout': site_layout(), "user": user, 'targets': out_targets}
+    return {'layout': site_layout(), "user": user, 'targets': out_targets, 'charity_funds': charity_funds,
+            'list_overseers': list_users}
 
 
 @view_config(route_name='watched_courses', renderer='templates/watched_courses.pt')
