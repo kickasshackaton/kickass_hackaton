@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"
         metal:define-macro="layout">
 <head>
-    <title>Bootstrap 101 Template</title>
+    <title>KickAss - motivate, learn, bet!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="${request.static_url('kickass:static/assets/css/bootstrap.min.css')}" rel="stylesheet">

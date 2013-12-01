@@ -44,6 +44,7 @@ class User(Base):
     password = Column(Text)
     money = Column(Float)
     mail = Column(Text)
+
     my_targets = relationship('Target', back_populates='user', foreign_keys='[Target.user_id]')
     overseered_targets = relationship('Target', back_populates='overseer', foreign_keys='[Target.overseer_id]')
     def __init__(self, name, username, password, money = 0, mail = "" ):
@@ -69,6 +70,7 @@ class Target(Base):
     bid = Column(Float)
     current_progress = Column(Integer)
     planned_progress = Column(Integer)
+    is_sucess = Column(Text)
     #source = Column(Integer, ForeignKey('User.id'))
     user_id = Column(Integer, ForeignKey('User.id'))
     overseer_id = Column(Integer, ForeignKey('User.id'))
@@ -101,4 +103,5 @@ class Target(Base):
         self.current_progress = current_progress
         self.planned_progress = planned_progress
         self.url = url
+        self.is_sucess = "ongoing"
 

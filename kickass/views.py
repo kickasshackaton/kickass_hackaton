@@ -10,6 +10,7 @@ from pyramid.response import Response
 from pyramid.view import view_config
 from pyramid.renderers import get_renderer
 from sqlalchemy.exc import DBAPIError
+from pyramid.httpexceptions import HTTPFound
 
 from .kick import (
     CourseraApi
@@ -226,7 +227,7 @@ def add_target(request):
         if (request.POST.has_key("type") and request.POST["type"] != "coursera_course"):
             new_target = Target(
                 name=request.POST["name"],
-                deadline=datetime.fromtimestamp(request.POST["deadline"]),
+                deadline=datetime.fromtimestamp(float(request.POST["deadline"])),
                 bid=float(request.POST["bid"]),
                 url=request.POST["url"]
             )
@@ -254,7 +255,8 @@ def add_target(request):
             new_target.overseer = DBSession.query(User).filter(User.id == request.POST["overseer"]).first()
         current_user = DBSession.query(User).filter(User.id == 1).first()
         current_user.money -= float(request.POST["bid"])
-    return {"Status" : "OK"}
+    return HTTPFound(location="/my_courses")
+
 
 @view_config(route_name='get_charity_funds', renderer='json')
 def get_charity_funds(request):
@@ -264,6 +266,15 @@ def get_charity_funds(request):
 def get_enrollable(request):
     return get_enrollable_courses()
 
+
+def user_savings(user_id):
+    user = DBSession.query(User).filter(User.id == user_id).first()
+    (saved, lost) = (0, 0)
+    for target in user.my_targets:
+        if (target.is_sucess == "sucess"):
+            saved += target.bid
+
+    return 0
 
 
 conn_err_msg = """\
