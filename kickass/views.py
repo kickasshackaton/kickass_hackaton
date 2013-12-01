@@ -34,11 +34,28 @@ def parse_coursera_api(url):
     return url
 
 
+@view_config(route_name='readed', renderer='templates/readed.pt')
+def readed(request):
+    try:
+        #one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
+        targets = DBSession.query(User).filter(User.id == 1).first().my_targets# TODO Hardcoded user.id
+        #list_users = DBSession.query(User).all()
+        out_targets = []
+        for target in targets:
+            if target.type != "coursera_course":
+                out_targets.append(target)
+        user = DBSession.query(User).filter(User.id == 1).first()
+    except DBAPIError:
+        return Response(conn_err_msg, content_type='text/plain', status_int=500)
+    return {'layout': site_layout(), "user": user, 'targets': out_targets}
+
+
 @view_config(route_name='watched_courses', renderer='templates/watched_courses.pt')
 def watched_courses(request):
     try:
         #one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
-        targets = DBSession.query(User).filter(User.id == 1).first().overseered_targets# TODO Hardcoded user.id
+        targets = DBSession.query(User).filter(User.id == 1).first().overseered_targets
+        print(targets)# TODO Hardcoded user.id
         list_users = DBSession.query(User).all()
         user = DBSession.query(User).filter(User.id == 1).first()
     except DBAPIError:
@@ -63,7 +80,7 @@ def home(request):
 
 @view_config(route_name='home_default', renderer='templates/courses.pt')
 def home_default(request):
-    try:#TODO user.id=1
+    try:
         #one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
         targets = DBSession.query(User).filter(User.id == 1).first().my_targets#.filter(Target.type=="coursera_course").all()
         list_users = DBSession.query(User).all()
