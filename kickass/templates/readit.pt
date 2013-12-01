@@ -85,7 +85,7 @@
                   <input type="hidden" name="user" value="1" />
                   <select class="form-control" name="overseer" id="overseer">
                     <option value="0">I have no friends</option>
-                    <option tal:repeat="current list_overseers" value="${current}">${current.name}</option>
+                    <option tal:repeat="current list_overseers" value="${current.id}">${current.name}</option>
                   </select>
                   witness!
                 </div>
