@@ -40,10 +40,12 @@ def watched_courses(request):
         #one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
         targets = DBSession.query(User).filter(User.id == 1).first().overseered_targets# TODO Hardcoded user.id
         list_users = DBSession.query(User).all()
+        user = DBSession.query(User).filter(User.id == 1).first()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
     return {'layout': site_layout(), 'targets': targets, 'list_users': list_users,
-            'list_overseers': list_users, 'charity_funds': charity_funds, "enrollable": get_enrollable_courses()}
+            'list_overseers': list_users, 'charity_funds': charity_funds, "enrollable": get_enrollable_courses(),
+            "user": user}
 
 
 @view_config(route_name='home', renderer='templates/courses.pt')
@@ -61,15 +63,16 @@ def home(request):
 
 @view_config(route_name='home_default', renderer='templates/courses.pt')
 def home_default(request):
-
-    try:
+    try:#TODO user.id=1
         #one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
         targets = DBSession.query(User).filter(User.id == 1).first().my_targets#.filter(Target.type=="coursera_course").all()
         list_users = DBSession.query(User).all()
+        user = DBSession.query(User).filter(User.id == 1).first()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
     return {'layout': site_layout(), 'targets': targets, 'list_users': list_users,
-            'list_overseers': list_users, 'charity_funds': charity_funds, "enrollable": get_enrollable_courses()}
+            'list_overseers': list_users, 'charity_funds': charity_funds, "enrollable": get_enrollable_courses(),
+            "user": user}
 
 
 @view_config(route_name='list_users', renderer='json')
