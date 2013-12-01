@@ -102,3 +102,10 @@ select {
     text-indent: .01px;
     text-overflow: '';
 }
+/*select:after {*/
+    /*position:absolute; z-index:1;*/
+    /*top:50%; right:10px; margin-top:-5px;*/
+    /*background:url(../img/select-arrows.png) top left no-repeat;*/
+    /*width:8px; height:10px;*/
+    /*content:'';*/
+/*}*/
