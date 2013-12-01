@@ -1,0 +1,61 @@
+<!-- Modal -->
+<div class="modal fade" id="newReaditCommitment" tabindex="-1" role="dialog">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title" id="myModalLabel">New ReadIt Commitment!</h4>
+    </div>
+    <div class="modal-body">
+      <form class="form-inline" role="form" id="newReaditCommitmentForm" method="POST" action="/add_target">
+        <div>
+        I pledge
+        $ <input type="text" class="form-control" name="bid"  id="bid" placeholder="100">
+        </div>
+          <div>
+        to look through
+          <input type="text" class="form-control" name="url"  id="url" placeholder="http://" /> thoroughly
+        </div>
+          <div>
+          in
+          <div class="btn-group" data-toggle="buttons">
+              <label class="btn btn-primary">
+                <input type="radio" name="options" value="1" id="option1">1
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" name="options" value="3" id="option2">3
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" name="options" value="5" id="option3">5
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" name="options" value="7" id="option3">7
+              </label>
+            </div>
+          days
+          </div>
+          <div>
+        or else shall my money go to
+          <select class="form-control" name="charity_type" id="charity_type">
+            <option tal:repeat="current charity_funds['anticharity']" value="${current}">${current}</option>
+            <option tal:repeat="current charity_funds['charity']" value="${current}">${current}</option>
+          </select>
+        </div>
+          <div>
+          Let my friend
+          <input type="hidden" name="user" value="1" />
+          <select class="form-control" name="overseer" id="overseer">
+            <option value="0">I have no friends</option>
+            <option tal:repeat="current list_overseers" value="${current}">${current.name}</option>
+          </select>
+          witness!
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">I yield</button>
+      <button type="submit" name="newCourseCommitmentSend" class="btn btn-primary" onclick="$('#newCourseCommitmentForm').submit();">So be it!</button>
+    </div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

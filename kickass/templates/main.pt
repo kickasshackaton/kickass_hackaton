@@ -41,7 +41,8 @@
               <li><a href="#">Read It</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">Eliah Nikans</a></li>
+              <li><a href="#"><strong><span class="glyphicon glyphicon-usd" style="top:2px;"></span>${user.money}</strong></a></li>
+              <li><a href="#">${user.name}</a></li>
               <li><a href="#">Sign out</a></li>
             </ul>
           </div><!-- /.navbar-collapse -->

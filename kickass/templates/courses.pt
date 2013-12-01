@@ -2,13 +2,13 @@
     <div metal:fill-slot="content">
 
         <div class="container courses-list">
-            <header class="row" tal:repeat="current targets" class="pledge-course">
+            <header class="row">
                 <div class="col-lg-3 col-xs-3"><h1>My Commitments</h1></div>
                 <div class="col-lg-6 col-xs-6">
                     <a href="#" data-toggle="modal" data-target="#newCourseCommitment">New Course Commitment!</a>
                 </div>
                 <div class="col-lg-3 col-xs-3">
-                    <a href="#">Watched Commitments</a>
+                    <a href="/watched_courses">Watched Commitments</a>
                 </div>
             </header>
 
@@ -37,52 +37,53 @@
             </div>
         </div>
 
+
+        <!-- Modal -->
+        <div class="modal fade" id="newCourseCommitment" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">New Course Commitment!</h4>
+            </div>
+            <div class="modal-body">
+              <form class="form-inline" role="form" id="newCourseCommitmentForm" method="POST" action="/add_target">
+                <div>
+                I pledge
+                $ <input type="text" class="form-control" name="bid"  id="bid" placeholder="100">
+                which is substantial for me
+                </div>
+                  <div>
+                to pass
+                  <select class="form-control" name="url" id="name">
+                    <option tal:repeat="current enrollable" value="${current['topic']['short_name']}">${current['topic']['name']}</option>
+                  </select>
+                </div>
+                  <div>
+                or else shall my money go to
+                  <select class="form-control" name="charity_type" id="charity_type">
+                    <option tal:repeat="current charity_funds['anticharity']" value="${current}">${current}</option>
+                    <option tal:repeat="current charity_funds['charity']" value="${current}">${current}</option>
+                  </select>
+                </div>
+                  <div>
+                  Let my friend
+                  <input type="hidden" name="user" value="1" />
+                  <select class="form-control" name="overseer" id="overseer">
+                    <option value="0">I have no friends</option>
+                    <option tal:repeat="current list_overseers" value="${current}">${current.name}</option>
+                  </select>
+                  witness!
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">I yield</button>
+              <button type="submit" name="newCourseCommitmentSend" class="btn btn-primary" onclick="$('#newCourseCommitmentForm').submit();">So be it!</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
     </div>
 </div>
-
-<!-- Modal -->
-<div class="modal fade" id="newCourseCommitment" tabindex="-1" role="dialog">
-<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h4 class="modal-title" id="myModalLabel">New Course Commitment!</h4>
-    </div>
-    <div class="modal-body">
-      <form class="form-inline" role="form" id="newCourseCommitmentForm" method="POST" action="/add_target">
-        <div>
-        I pledge
-        $ <input type="text" class="form-control" name="bid"  id="bid" placeholder="100">
-        which is substantial for me
-        </div>
-          <div>
-        to pass
-          <select class="form-control" name="url" id="name">
-            <option tal:repeat="current enrollable" value="${current['topic']['short_name']}">${current['topic']['name']}</option>
-          </select>
-        </div>
-          <div>
-        or else shall my money go to
-          <select class="form-control" name="charity_type" id="charity_type">
-            <option tal:repeat="current charity_funds['anticharity']" value="${current}">${current}</option>
-            <option tal:repeat="current charity_funds['charity']" value="${current}">${current}</option>
-          </select>
-        </div>
-          <div>
-          Let my friend
-          <input type="hidden" name="user" value="1" />
-          <select class="form-control" name="overseer" id="overseer">
-            <option value="0">I have no friends</option>
-            <option tal:repeat="current list_overseers" value="${current}">${current.name}</option>
-          </select>
-          witness!
-        </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">I yield</button>
-      <button type="submit" name="newCourseCommitmentSend" class="btn btn-primary" onclick="$('#newCourseCommitmentForm').submit();">So be it!</button>
-    </div>
-  </div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
