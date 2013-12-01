@@ -85,7 +85,7 @@
                   </select>
                   witness!
                 </div>
-
+                    <input type="hidden" name="type" value="readit" />
                   <div>
                     <div metal:use-macro="new_target_payment_method"></div>
                 </div>

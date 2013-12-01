@@ -73,7 +73,7 @@
                     <option tal:repeat="current charity_funds['charity']" value="${current}">${current}</option>
                   </select>
                 </div>
-
+                    <input type="hidden" name="type" value="coursera_course" />
                   <div>
                     <div metal:use-macro="new_target_payment_method"></div>
                 </div>
