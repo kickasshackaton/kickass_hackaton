@@ -27,11 +27,29 @@ def site_layout():
     layout = renderer.implementation().macros['layout']
     return layout
 
+
+def new_target_payment_method():
+    renderer = get_renderer("templates/new_target_payment_method.pt")
+    layout = renderer.implementation().macros['new_target_payment_method']
+    return layout
+
+
 def parse_coursera_api(url):
     mypath = urlsplit(url)[2]
     mypath = "/"+mypath
     url = path.basename(mypath)
     return url
+
+
+@view_config(route_name="account", renderer='templates/account.pt')
+def account(request):
+    if request.method == "GET":
+        user = DBSession.query(User).filter(User.id == 1).first() ## TODO Hardcoded user.id
+        return {'layout': site_layout(), "user": user, "menu": "account"}
+    else:
+        user = DBSession.query(User).filter(User.id == request.POST["user_id"]).first()
+        user.money += int(request.POST["money"])
+        return {"status": "ok"}
 
 
 @view_config(route_name='readit', renderer='templates/readit.pt')
@@ -91,7 +109,7 @@ def home_default(request):
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
     return {'layout': site_layout(), 'targets': targets, 'list_users': list_users,
             'list_overseers': list_users, 'charity_funds': charity_funds, "enrollable": get_enrollable_courses(),
-            "user": user, "menu": "courses"}
+            "user": user, "menu": "courses", "new_target_payment_method": new_target_payment_method()}
 
 
 @view_config(route_name='list_users', renderer='json')
@@ -145,7 +163,7 @@ def get_enrollable_courses():
     listingCombined = courseraApi.listingCombined()
     topics = listingCombined['list2']['topics']
     courses = filter_non_unique_courses(listingCombined['list2']['courses'])
-    courses = filter(filter_past_courses, courses);
+    courses = filter(filter_past_courses, courses)
     return list(map(lambda item:
                     { "course" : item, "topic": topics[str(item['topic_id'])] }
         ,courses))
@@ -199,13 +217,15 @@ def add_target(request):
             new_target = Target(
                 name=request.POST["name"],
                 deadline=datetime.fromtimestamp(request.POST["deadline"]),
-                bid=request.POST["bid"],
+                bid=float(request.POST["bid"]),
                 url=request.POST["url"]
             )
             new_target.type = request.POST["type"]
             new_target.charity_type = request.POST["charity_type"]
         else:
             url = parse_coursera_api(request.POST["url"])
+            print("BID: " + request.POST["bid"])
+
             new_target = Target(
                 name=get_enrolled_course_by_url(url)["topic"]["name"], #request.POST["name"],
                 deadline=get_enrolled_course_deadline_by_url(url),
@@ -220,9 +240,10 @@ def add_target(request):
         # name charity_type overseer bid
         DBSession.add(new_target)
         new_target.user = DBSession.query(User).filter(User.id == request.POST["user"]).first()
-        if request.POST.has_key["overseer"] and request.POST["overseer"] != "0":
+        if request.POST.has_key("overseer") and request.POST["overseer"] != "0":
             new_target.overseer = DBSession.query(User).filter(User.id == request.POST["overseer"]).first()
-
+        current_user = DBSession.query(User).filter(User.id == 1).first()
+        current_user.money -= float(request.POST["bid"])
     return {"Status" : "OK"}
 
 @view_config(route_name='get_charity_funds', renderer='json')
