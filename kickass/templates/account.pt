@@ -1,0 +1,17 @@
+<div metal:use-macro="layout">
+    <div metal:fill-slot="content">
+
+        <div class="container courses-list targets-list">
+            <header class="row">
+                <div class="col-lg-8 col-xs-8"><h1>My Account</h1></div>
+                <div class="col-lg-5 col-xs-5">
+                    <a href="#" data-toggle="modal" data-target="#newCourseCommitment">New Course Commitment!</a>
+                </div>
+                <div class="col-lg-3 col-xs-3">
+                    <a href="/watched_courses">Watched Commitments</a>
+                </div>
+            </header>
+
+            <div class="row pledge pledge-course" tal:repeat="current targets">
+                <div class="col-lg-4 col-xs-4">
+
