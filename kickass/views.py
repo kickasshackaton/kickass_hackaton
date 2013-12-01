@@ -48,7 +48,7 @@ def readed(request):
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
     return {'layout': site_layout(), "user": user, 'targets': out_targets, 'charity_funds': charity_funds,
-            'list_overseers': list_users}
+            'list_overseers': list_users, "menu": "readit"}
 
 
 @view_config(route_name='watched_courses', renderer='templates/watched_courses.pt')
@@ -63,7 +63,7 @@ def watched_courses(request):
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
     return {'layout': site_layout(), 'targets': targets, 'list_users': list_users,
             'list_overseers': list_users, 'charity_funds': charity_funds, "enrollable": get_enrollable_courses(),
-            "user": user}
+            "user": user, "menu": "watched_courses"}
 
 
 @view_config(route_name='home', renderer='templates/courses.pt')
@@ -76,7 +76,8 @@ def home(request):
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
     return {'layout': site_layout(), 'targets': targets, 'list_users': list_users,
-            'list_overseers': list_users, 'charity_funds': charity_funds, "enrollable": get_enrollable_courses()}
+            'list_overseers': list_users, 'charity_funds': charity_funds, "enrollable": get_enrollable_courses(),
+            "menu": "courses"}
 
 
 @view_config(route_name='home_default', renderer='templates/courses.pt')
@@ -90,7 +91,7 @@ def home_default(request):
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
     return {'layout': site_layout(), 'targets': targets, 'list_users': list_users,
             'list_overseers': list_users, 'charity_funds': charity_funds, "enrollable": get_enrollable_courses(),
-            "user": user}
+            "user": user, "menu": "courses"}
 
 
 @view_config(route_name='list_users', renderer='json')
