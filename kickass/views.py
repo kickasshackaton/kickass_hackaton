@@ -40,7 +40,8 @@ def account(request):
         user = DBSession.query(User).filter(User.id == 1).first() ## TODO Hardcoded user.id
         return {'layout': site_layout(), "user": user, "menu": "account"}
     else:
-
+        user = DBSession.query(User).filter(User.id == request.POST["user_id"]).first()
+        user.money += int(request.POST["money"])
         return {"status": "ok"}
 
 
@@ -155,7 +156,7 @@ def get_enrollable_courses():
     listingCombined = courseraApi.listingCombined()
     topics = listingCombined['list2']['topics']
     courses = filter_non_unique_courses(listingCombined['list2']['courses'])
-    courses = filter(filter_past_courses, courses);
+    courses = filter(filter_past_courses, courses)
     return list(map(lambda item:
                     { "course" : item, "topic": topics[str(item['topic_id'])] }
         ,courses))
