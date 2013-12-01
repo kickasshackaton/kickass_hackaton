@@ -24,8 +24,10 @@
                 <div class="col-lg-6 col-xs-6">
                     <dl class="dl-horizontal">
                         <dt>Balance:</dt><dd><i class="kick-coin"></i>${int(user.money)}</dd>
-                        <dt>WIN:</dt><dd><i class="kick-coin"></i>${ user_savings(user.id)['saved'] }</dd>
-                        <dt>F# up:</dt><dd><i class="kick-coin"></i>${ user_savings(user.id)['lost'] }</dd>
+                        <dt>WIN:</dt>
+                        <dd><i class="kick-coin"></i>${ user_savings['saved'] }</dd>
+                        <dt>F# up:</dt>
+                        <dd><i class="kick-coin"></i>${ user_savings['lost'] }</dd>
                     </dl>
                 </div>
             </div>

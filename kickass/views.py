@@ -5,12 +5,14 @@ from datetime import (
 from urllib.parse import urlsplit
 from os import path
 from functools import reduce
+import urllib.request
 
 from pyramid.response import Response
 from pyramid.view import view_config
 from pyramid.renderers import get_renderer
 from sqlalchemy.exc import DBAPIError
 from pyramid.httpexceptions import HTTPFound
+from bs4 import BeautifulSoup
 
 from .kick import (
     CourseraApi
@@ -47,7 +49,7 @@ def account(request):
     if request.method == "GET":
         user = DBSession.query(User).filter(User.id == 1).first() ## TODO Hardcoded user.id
         return {'layout': site_layout(), "user": user, "menu": "account",
-                "new_target_payment_method": new_target_payment_method()}
+                "new_target_payment_method": new_target_payment_method(), "user_savings": user_savings(user.id)}
     else:
         user = DBSession.query(User).filter(User.id == request.POST["user_id"]).first()
         user.money += int(request.POST["money"])
@@ -271,13 +273,23 @@ def user_savings(user_id):
     user = DBSession.query(User).filter(User.id == user_id).first()
     (saved, lost) = (0.0, 0.0)
     for target in user.my_targets:
-        if (target.is_sucess == "sucess"):
+        if (target.is_success == "success"):
             saved += target.bid
-        if (target.is_sucess == "fail"):
+        if (target.is_success == "fail"):
             lost += target.bid
 
     return {"saved": saved,
             "lost": lost}
+
+
+@view_config(route_name='get_name_url', renderer='string')
+def get_name_url(request):
+    url = request.GET["url"]
+    print(url)
+    response = urllib.request.urlopen(url)
+    html = response.read()
+    soup = BeautifulSoup(html)
+    return soup.html.head.title.string
 
 
 conn_err_msg = """\

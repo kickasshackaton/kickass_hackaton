@@ -71,7 +71,7 @@ class Target(Base):
     bid = Column(Float)
     current_progress = Column(Integer)
     planned_progress = Column(Integer)
-    is_sucess = Column(Text)
+    is_success = Column(Text)
     #source = Column(Integer, ForeignKey('User.id'))
     user_id = Column(Integer, ForeignKey('User.id'))
     overseer_id = Column(Integer, ForeignKey('User.id'))
@@ -104,5 +104,5 @@ class Target(Base):
         self.current_progress = current_progress
         self.planned_progress = planned_progress
         self.url = url
-        self.is_sucess = "ongoing"
+        self.is_success = "ongoing"
 

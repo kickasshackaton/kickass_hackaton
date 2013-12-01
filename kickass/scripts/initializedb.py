@@ -42,15 +42,26 @@ def main(argv=sys.argv):
 
         user3 = User(name="Mama",username="mom",password="123456",mail="mom@mail.ru")
 
-        target1 = Target(name="Python for dummies", deadline=datetime.datetime(year=1987, month=10, day=5), bid=100,
+        target1 = Target(name="Python for real dummies like us", deadline=datetime.datetime(year=1987, month=10, day=5),
+                         bid=100,
                          url="biomech")
         target1.planned_progress = 70
         target1.current_progress = 30
         target1.user = user1
         target1.overseer = user2
-        target1 = Target(name="Inroduction to Gay technologies", deadline=datetime.datetime(year=2008,month=10, day=5),bid=500, url = "nanotech")
+        target1 = Target(name="Inroduction to Gay Ritchi technologies",
+                         deadline=datetime.datetime(year=2008, month=10, day=5), bid=500, url="nanotech")
         target1.planned_progress = 60
         target1.current_progress = 40
+        target1.is_success = "success"
+        target1.user = user2
+        target1.overseer = user3
+        DBSession.add(target1)
+        target1 = Target(name="Total unconciousness!", deadline=datetime.datetime(year=2014, month=10, day=5), bid=900,
+                         url="nanotech")
+        target1.planned_progress = 60
+        target1.current_progress = 40
+        target1.is_success = "fail"
         target1.user = user2
         target1.overseer = user3
         DBSession.add(target1)

@@ -16,8 +16,9 @@ requires = [
     'waitress',
     'beautifulsoup4',
     'requests',
-    'pyramid_chameleon'
-    ]
+    'pyramid_chameleon',
+
+]
 
 setup(name='kickass',
       version='0.0',

@@ -26,5 +26,6 @@ def main(global_config, **settings):
     config.add_route('watched_courses', '/watched_courses')
     config.add_route('readit', '/my_readit')
     config.add_route('account', '/account')
+    config.add_route('get_name_url', '/get_name_url')
     config.scan()
     return config.make_wsgi_app()
