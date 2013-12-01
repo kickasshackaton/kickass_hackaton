@@ -10,22 +10,23 @@
             </header>
 
             <div class="row pledge pledge-readit" tal:repeat="current targets">
-                <div class="col-lg-4 col-xs-4">
-                  <div class="readit-name">${current.name}</div>
-                </div>
+                <div class="col-lg-10 col-xs-10">
                 <!--${current.type}-->
-                <div class="col-lg-6 col-xs-6">
-                  <div class="progress">
-                      <div class="progress-bar progress-bar-success" style="width:${current.current_progress}%">
-                        <span class="sr-only"></span>
-                      </div>
-                      <div class="progress-bar progress-bar-warning" style="width:${current.planned_progress-current.current_progress}%">
-                        <span class="sr-only"></span>
-                      </div>
+                    <div class="pull-right">
+                        <div class="time-left">3d 5h</div>
+                        <div class="progress">
+                          <div class="progress-bar progress-bar-success" style="width:${current.current_progress}%">
+                            <span class="sr-only"></span>
+                          </div>
+                          <div class="progress-bar progress-bar-warning" style="width:${current.planned_progress-current.current_progress}%">
+                            <span class="sr-only"></span>
+                          </div>
+                        </div>
+                        <div class="deadline">${current.deadline.strftime("%m/%d/%y")}</div>
+                    </div>
+
+                    <div class="readit-name"><span class="glyphicon glyphicon-book"></span> <a href="${current.url}">${current.name}</a></div>
                   </div>
-                    <div class="deadline pull-right">${current.deadline.strftime("%m/%d/%y")}</div>
-                    <div class="time-left">3 weeks 4 hours left</div>
-                </div>
                 <div class="col-lg-2 col-xs-2">
                   <div tal:condition="current.overseer.id != current.user.id" class="overseer pull-left"><img src="/static/assets/img/userpic-small.png" /></div>
                   <a class="bid btn btn-success">$${int(current.bid)}</a>
@@ -51,20 +52,23 @@
 
                   <input type="text" class="form-control" name="url"  id="url" placeholder="http://" />
                 </div>
+                  <div id="name"><span></span>
+                      <input type="hidden" name="name" value="" />
+                  </div>
                   <div style="text-align:center;">
                   in
                   <div class="btn-group btn-group-lg" data-toggle="buttons" style="margin:0 7px 4px 7px;">
                       <label class="btn btn-default">
-                        <input type="radio" name="options" value="1" id="option1">1
+                        <input type="radio" name="deadline_days" value="1" id="deadline_days1">1
                       </label>
                       <label class="btn btn-default">
-                        <input type="radio" name="options" value="3" id="option2">3
+                        <input type="radio" name="deadline_days" value="3" id="deadline_days3">3
                       </label>
                       <label class="btn btn-default">
-                        <input type="radio" name="options" value="5" id="option3">5
+                        <input type="radio" name="deadline_days" value="5" id="deadline_days5">5
                       </label>
                       <label class="btn btn-default">
-                        <input type="radio" name="options" value="7" id="option3">7
+                        <input type="radio" name="deadline_days" value="7" id="deadline_days7">7
                       </label>
                     </div>
                   days
@@ -99,13 +103,21 @@
         </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-        $('#newReaditCommitment').on('click', '#url', function(e){
-            alert(1);
-            $.get( $(this).val(), function( data ) {
-              alert( "Data Loaded: " + data );
+        <script>
+        $(function(){
+            $('#newReaditCommitment').on('change keyup mouseup', '#url', function(e){
+            $.get( '/get_name_url?url='+encodeURIComponent( $(this).val() ), function( data ) {
+                if(data.length > 0)
+                    $('#name').find('span').text('“'+data+'”');
+                else
+                    $('#name').find('span').text('');
+            }).fail(function() {
+                $('#name').find('span').text('');
             });
-        });
+        })
 
+        });
+        </script>
 
       </div>
 </div>

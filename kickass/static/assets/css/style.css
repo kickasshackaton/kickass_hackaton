@@ -58,24 +58,17 @@ body {
     font-size:20px; color:#9d9d9d;
 }
 
-.courses-list .course-name {
-    font-size:18px;
-}
+.courses-list .course-name { font-size:18px; }
+.targets-list .overseer {}
+.targets-list .bid { margin-left:15px; }
+.targets-list .overseer, .targets-list .bid { margin-top:-3px; }
 
-.courses-list .overseer {
-}
+.courses-list .progress { margin-bottom:3px; }
 
-.courses-list .bid {
-    margin-left:15px;
-}
+.readit-list .time-left { display:inline-block; }
+.readit-list .deadline { display:inline-block; }
+.readit-list .progress { margin:0px 10px; display:inline-block; width:100px; top: 5px; position: relative; }
 
-.courses-list .overseer, .courses-list .bid {
-    margin-top:-7px;
-}
-
-.courses-list .progress {
-    margin-bottom:3px;
-}
 
 .pledge {
     margin-bottom:15px;
@@ -96,6 +89,7 @@ body {
 #newReaditCommitment #charity_type { width:298px; }
 #newReaditCommitment #overseer { width:346px; }
 #newReaditCommitment #bid { width:52px; }
+#newReaditCommitment #name span { font-style:italic; font-size:14px; color:#222222; }
 
 select {
     margin: 0;
