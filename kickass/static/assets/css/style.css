@@ -4,6 +4,7 @@
 html,
 body {
     height: 100%;
+    padding-top:25px;
     font-family:"Open Sans", "Helvetica", "Arial", sans; font-weight:300;
     /* The html and body elements cannot have any padding or margin. */
 }
@@ -30,7 +31,7 @@ body {
     height:485px;
     background:#eceeee url(../img/hero-unit.png) top center no-repeat;
 
-    box-shadow:1px 0 1px #d0cdcd;
+    box-shadow:0px 1px 1px #e0e0e0;
 }
 
 .courses-list {
@@ -63,6 +64,10 @@ body {
     margin-top:-7px;
 }
 
+.courses-list .progress {
+    margin-bottom:3px;
+}
+
 #newCourseCommitment {
     font-size:18px;
 }
@@ -72,7 +77,28 @@ body {
 }
 
 #newCourseCommitment #name { width:454px; }
-#newCourseCommitment #charity_fund { width:279px; }
-#newCourseCommitment #observer { width:333px; }
+#newCourseCommitment #charity_type { width:279px; }
+#newCourseCommitment #overseer { width:333px; }
+#newCourseCommitment #user { width:490px; }
 
 #newCourseCommitment div { margin-bottom:20px; }
+
+
+
+select {
+    margin: 0;
+    border: 0;
+    width: 130%;
+    height: 33px;
+    padding: 8px;
+    color: #666;
+    display: block;
+    position: relative;
+    text-shadow: 0 1px white;
+    background: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: normal;
+    text-indent: .01px;
+    text-overflow: '';
+}

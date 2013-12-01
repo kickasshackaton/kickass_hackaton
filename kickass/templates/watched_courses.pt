@@ -3,12 +3,12 @@
 
         <div class="container courses-list">
             <header class="row" tal:repeat="current targets" class="pledge-course">
-                <div class="col-lg-3 col-xs-3"><h1>My Commitments</h1></div>
+                <div class="col-lg-3 col-xs-3"><h1>My Watched Commitments</h1></div>
                 <div class="col-lg-6 col-xs-6">
-                    <a href="#" data-toggle="modal" data-target="#newCourseCommitment">New Course Commitment!</a>
+                    <a href="#" data-toggle="modal" data-target="#newCourseCommitment">New Watched Course Commitment!</a>
                 </div>
                 <div class="col-lg-3 col-xs-3">
-                    <a href="#">Watched Commitments</a>
+                    <a href="/myCoursera">My Commitments</a>
                 </div>
             </header>
 
@@ -56,6 +56,13 @@
         which is substantial for me
         </div>
           <div>
+          for
+         <input type="hidden" name="overseer" value="1" />
+          <select class="form-control" name="user" id="user">
+            <option tal:repeat="current list_users" value="${current}">${current.name}</option>
+          </select>
+        </div>
+          <div>
         to pass
           <select class="form-control" name="url" id="name">
             <option tal:repeat="current enrollable" value="${current['course']['home_link']}">${current['topic']['name']}</option>
@@ -67,15 +74,6 @@
             <option tal:repeat="current charity_funds['anticharity']" value="${current}">${current}</option>
             <option tal:repeat="current charity_funds['charity']" value="${current}">${current}</option>
           </select>
-        </div>
-          <div>
-          Let my friend
-          <input type="hidden" name="user" value="1" />
-          <select class="form-control" name="overseer" id="overseer">
-            <option value="0">I have no friends</option>
-            <option tal:repeat="current list_overseers" value="${current}">${current.name}</option>
-          </select>
-          witness!
         </div>
       </form>
     </div>
