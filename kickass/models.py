@@ -47,7 +47,8 @@ class User(Base):
 
     my_targets = relationship('Target', back_populates='user', foreign_keys='[Target.user_id]')
     overseered_targets = relationship('Target', back_populates='overseer', foreign_keys='[Target.overseer_id]')
-    def __init__(self, name, username, password, money = 0, mail = "" ):
+
+    def __init__(self, name, username, password, money=5000, mail=""):
         self.name = name
         self.username = username
         self.password = password

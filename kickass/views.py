@@ -269,12 +269,15 @@ def get_enrollable(request):
 
 def user_savings(user_id):
     user = DBSession.query(User).filter(User.id == user_id).first()
-    (saved, lost) = (0, 0)
+    (saved, lost) = (0.0, 0.0)
     for target in user.my_targets:
         if (target.is_sucess == "sucess"):
             saved += target.bid
+        if (target.is_sucess == "fail"):
+            lost += target.bid
 
-    return 0
+    return {"saved": saved,
+            "lost": lost}
 
 
 conn_err_msg = """\
