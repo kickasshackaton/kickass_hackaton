@@ -40,6 +40,7 @@ def account(request):
         user = DBSession.query(User).filter(User.id == 1).first() ## TODO Hardcoded user.id
         return {'layout': site_layout(), "user": user, "menu": "account"}
     else:
+
         return {"status": "ok"}
 
 
@@ -231,7 +232,8 @@ def add_target(request):
         new_target.user = DBSession.query(User).filter(User.id == request.POST["user"]).first()
         if request.POST.has_key["overseer"] and request.POST["overseer"] != "0":
             new_target.overseer = DBSession.query(User).filter(User.id == request.POST["overseer"]).first()
-
+        current_user = DBSession.query(User).filter(User.id == 1).first()
+        current_user.money -= float(request.POST["bid"])
     return {"Status" : "OK"}
 
 @view_config(route_name='get_charity_funds', renderer='json')
