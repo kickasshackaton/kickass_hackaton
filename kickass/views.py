@@ -45,7 +45,8 @@ def parse_coursera_api(url):
 def account(request):
     if request.method == "GET":
         user = DBSession.query(User).filter(User.id == 1).first() ## TODO Hardcoded user.id
-        return {'layout': site_layout(), "user": user, "menu": "account"}
+        return {'layout': site_layout(), "user": user, "menu": "account",
+                "new_target_payment_method": new_target_payment_method()}
     else:
         user = DBSession.query(User).filter(User.id == request.POST["user_id"]).first()
         user.money += int(request.POST["money"])
@@ -66,7 +67,7 @@ def readed(request):
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
     return {'layout': site_layout(), "user": user, 'targets': out_targets, 'charity_funds': charity_funds,
-            'list_overseers': list_users, "menu": "readit"}
+            'list_overseers': list_users, "menu": "readit", "new_target_payment_method": new_target_payment_method()}
 
 
 @view_config(route_name='watched_courses', renderer='templates/watched_courses.pt')
@@ -81,7 +82,7 @@ def watched_courses(request):
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
     return {'layout': site_layout(), 'targets': targets, 'list_users': list_users,
             'list_overseers': list_users, 'charity_funds': charity_funds, "enrollable": get_enrollable_courses(),
-            "user": user, "menu": "watched_courses"}
+            "user": user, "menu": "watched_courses", "new_target_payment_method": new_target_payment_method()}
 
 
 @view_config(route_name='home', renderer='templates/courses.pt')
@@ -95,7 +96,7 @@ def home(request):
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
     return {'layout': site_layout(), 'targets': targets, 'list_users': list_users,
             'list_overseers': list_users, 'charity_funds': charity_funds, "enrollable": get_enrollable_courses(),
-            "menu": "courses"}
+            "menu": "courses", "new_target_payment_method": new_target_payment_method()}
 
 
 @view_config(route_name='home_default', renderer='templates/courses.pt')
@@ -212,7 +213,7 @@ def check_target(request):
 
 @view_config(route_name='add_target', renderer='json')
 def add_target(request):
-    if(request.method == "POST"):
+    if (request.method == "POST"):#TODO redirect by payment_method
         if (request.POST.has_key("type") and request.POST["type"] != "coursera_course"):
             new_target = Target(
                 name=request.POST["name"],
