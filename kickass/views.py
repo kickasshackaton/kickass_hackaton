@@ -34,6 +34,15 @@ def parse_coursera_api(url):
     return url
 
 
+@view_config(route_name="account", renderer='templates/account.pt')
+def account(request):
+    if request.method == "GET":
+        user = DBSession.query(User).filter(User.id == 1).first() ## TODO Hardcoded user.id
+        return {'layout': site_layout(), "user": user, "menu": "account"}
+    else:
+        return {"status": "ok"}
+
+
 @view_config(route_name='readit', renderer='templates/readit.pt')
 def readed(request):
     try:
@@ -199,7 +208,7 @@ def add_target(request):
             new_target = Target(
                 name=request.POST["name"],
                 deadline=datetime.fromtimestamp(request.POST["deadline"]),
-                bid=request.POST["bid"],
+                bid=float(request.POST["bid"]),
                 url=request.POST["url"]
             )
             new_target.type = request.POST["type"]
