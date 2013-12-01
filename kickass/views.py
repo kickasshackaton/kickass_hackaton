@@ -34,6 +34,18 @@ def parse_coursera_api(url):
     return url
 
 
+@view_config(route_name='watched_courses', renderer='templates/watched_courses.pt')
+def watched_courses(request):
+    try:
+        #one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
+        targets = DBSession.query(User).filter(User.id == 1).first().overseered_targets# TODO Hardcoded user.id
+        list_users = DBSession.query(User).all()
+    except DBAPIError:
+        return Response(conn_err_msg, content_type='text/plain', status_int=500)
+    return {'layout': site_layout(), 'targets': targets, 'list_users': list_users,
+            'list_overseers': list_users, 'charity_funds': charity_funds, "enrollable": get_enrollable_courses()}
+
+
 @view_config(route_name='home', renderer='templates/courses.pt')
 def home(request):
 
@@ -173,9 +185,9 @@ def add_target(request):
         else:
             url = parse_coursera_api(request.POST["url"])
             new_target = Target(
-                name=get_enrolled_course_by_url(url), #request.POST["name"],
+                name=get_enrolled_course_by_url(url)["topic"]["name"], #request.POST["name"],
                 deadline=get_enrolled_course_deadline_by_url(url),
-                bid=request.POST["bid"],
+                bid=float(request.POST["bid"]),
                 url=url
             )
             new_target.charity_type = request.POST["charity_type"]
