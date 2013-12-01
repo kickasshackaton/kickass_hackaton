@@ -93,11 +93,19 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">I yield</button>
-              <button type="submit" name="newCourseCommitmentSend" class="btn btn-primary" onclick="$('#newCourseCommitmentForm').submit();">So be it!</button>
+              <button type="submit" name="newCourseCommitmentSend" class="btn btn-primary" onclick="$('#newReaditCommitmentForm').submit();">So be it!</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
+
+        $('#newReaditCommitment').on('click', '#url', function(e){
+            alert(1);
+            $.get( $(this).val(), function( data ) {
+              alert( "Data Loaded: " + data );
+            });
+        });
+
 
       </div>
 </div>
