@@ -1,28 +1,26 @@
-from pyramid.response import Response
-from pyramid.view import view_config
-from pyramid.renderers import get_renderer
-from sqlalchemy.exc import DBAPIError
 from datetime import (
     datetime,
     timedelta
     )
 from urllib.parse import urlsplit
 from os import path
-
-import json
 from functools import reduce
+
+from pyramid.response import Response
+from pyramid.view import view_config
+from pyramid.renderers import get_renderer
+from sqlalchemy.exc import DBAPIError
 
 from .kick import (
     CourseraApi
 )
-
 from .models import (
     DBSession,
-    MyModel,
     Target,
     User,
     charity_funds
     )
+
 
 def site_layout():
     renderer = get_renderer("templates/main.pt")
@@ -45,7 +43,9 @@ def home(request):
         list_users = DBSession.query(User).all()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'layout' : site_layout(),'targets' : targets, 'list_users' : list_users, 'charity_funds' : charity_funds, "enrollable":get_enrollable_courses()}
+    return {'layout': site_layout(), 'targets': targets, 'list_users': list_users,
+            'list_overseers': list_users, 'charity_funds': charity_funds, "enrollable": get_enrollable_courses()}
+
 
 @view_config(route_name='home_default', renderer='templates/courses.pt')
 def home_default(request):
@@ -56,7 +56,9 @@ def home_default(request):
         list_users = DBSession.query(User).all()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'layout' : site_layout(),'targets' : targets, 'list_users' : list_users, 'charity_funds' : charity_funds, "enrollable":get_enrollable_courses()}
+    return {'layout': site_layout(), 'targets': targets, 'list_users': list_users,
+            'list_overseers': list_users, 'charity_funds': charity_funds, "enrollable": get_enrollable_courses()}
+
 
 @view_config(route_name='list_users', renderer='json')
 def list_users(request):
@@ -159,9 +161,15 @@ def add_target(request):
                 url=url
             )
             new_target.charity_type = request.POST["charity_type"]
+            #new_target.user = DBSession.query(User).filter(User.id == request.POST["user"]).first()
+            #new_target.overseer = DBSession.query(User).filter(User.id == request.POST["overseer"]).first()
+
+        # form fields
+        # name charity_type overseer bid
         DBSession.add(new_target)
         new_target.user = DBSession.query(User).filter(User.id == request.POST["user"]).first()
-        new_target.overseer = DBSession.query(User).filter(User.id == request.POST["overseer"]).first()
+        if request.POST.has_key["overseer"]:
+            new_target.overseer = DBSession.query(User).filter(User.id == request.POST["overseer"]).first()
 
     return {"Status" : "OK"}
 
