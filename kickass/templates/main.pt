@@ -40,9 +40,9 @@
                     It</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#"><i class="kick-coin"></i><strong>${int(user.money)}</strong> KickCoin&reg;</a></li>
-              <li><a href="#" style="padding-left:0;">Add more</a></li>
-              <li><a href="#">${user.name}</a></li>
+              <li><a href="/account"><i class="kick-coin"></i><strong>${int(user.money)}</strong> KickCoin&reg;</a></li>
+              <li><a href="/account" style="padding-left:0;">Add more</a></li>
+              <li tal:attributes="class python: menu == 'account' and 'active' or 'dfght'"><a href="/account">${user.name}</a></li>
               <li><a href="#">Sign out</a></li>
             </ul>
           </div><!-- /.navbar-collapse -->
@@ -54,7 +54,7 @@
         <div metal:define-slot="content"></div>
 
     </div>
-    <div id="footer">Eat shit</div>
+    <div id="footer">KickAss Co. &copy; 2020-2030. <i class="kick-coin"></i>KickCoin&reg; may be a registered trade mark of KickAss Co.</div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>

@@ -1,17 +1,33 @@
 <div metal:use-macro="layout">
     <div metal:fill-slot="content">
 
-        <div class="container courses-list targets-list">
+        <div class="container account">
             <header class="row">
-                <div class="col-lg-8 col-xs-8"><h1>My Account</h1></div>
-                <div class="col-lg-4 col-xs-4">
-                    <i class="kick-coin"></i><h1>KickCoin</h1>
+                <div class="col-lg-6 col-xs-6"><h1>My Account</h1></div>
+                <div class="col-lg-6 col-xs-6">
+                    <h1><i class="kick-coin"></i>My KickCoin&reg; — <span class="glyphicon glyphicon-plus-sign" style="opacity:0.6; top:4px;"></span> <a href="#">Add more!</a></h1>
                 </div>
             </header>
 
             <div class="row">
-                <div class="col-lg-4 col-xs-4"></div>
-                <div class="col-lg-4 col-xs-4"></div>
+                <div class="col-lg-2 col-xs-2">
+                    <img src="/static/assets/img/userpics/${user.id}.jpg" />
+                </div>
+                <div class="col-lg-4 col-xs-4">
+                    <dl class="dl-horizontal">
+                        <dt>Name:</dt><dd>${user.name}</dd>
+                        <dt>Login:</dt><dd>${user.username}</dd>
+                        <dt>Email:</dt><dd>${user.mail}</dd>
+                        <dt>Password:</dt><dd><a href="#">Change password</a></dd>
+                    </dl>
+                </div>
+                <div class="col-lg-6 col-xs-6">
+                    <dl class="dl-horizontal">
+                        <dt>Balance:</dt><dd><i class="kick-coin"></i>${int(user.money)}</dd>
+                        <dt>WIN:</dt><dd><i class="kick-coin"></i>${ user_savings(user.id)['saved'] }</dd>
+                        <dt>F# up:</dt><dd><i class="kick-coin"></i>${ user_savings(user.id)['lost'] }</dd>
+                    </dl>
+                </div>
             </div>
         </div>
     </div>
