@@ -3,8 +3,8 @@
 
         <div class="container courses-list">
             <header class="row">
-                <div class="col-lg-3 col-xs-3"><h1>My Commitments</h1></div>
-                <div class="col-lg-6 col-xs-6">
+                <div class="col-lg-4 col-xs-4"><h1>My Commitments</h1></div>
+                <div class="col-lg-5 col-xs-5">
                     <a href="#" data-toggle="modal" data-target="#newCourseCommitment">New Course Commitment!</a>
                 </div>
                 <div class="col-lg-3 col-xs-3">

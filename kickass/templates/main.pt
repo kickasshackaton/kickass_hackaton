@@ -42,6 +42,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="#"><strong><span class="glyphicon glyphicon-usd" style="top:2px;"></span>${user.money}</strong></a></li>
+              <li><a href="#" style="padding-left:0;">Add more</a></li>
               <li><a href="#">${user.name}</a></li>
               <li><a href="#">Sign out</a></li>
             </ul>
