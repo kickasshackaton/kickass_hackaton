@@ -2,6 +2,7 @@ from datetime import (
     datetime,
     timedelta
     )
+from time import time
 from urllib.parse import urlsplit
 from os import path
 from functools import reduce
@@ -132,6 +133,11 @@ def list_users(request):
 
 def get_course_deadline(course):
     course['weeks'] = int(course['duration_string'].partition(' ')[0])
+    #print("Current course")
+    #print("%s %s %s" % (course['start_year'], course['start_month'], course['start_day']))
+    if (course['start_day'] is None):
+        course['start_day'] = 1
+
     return datetime(course['start_year'], course['start_month'], course['start_day']) + timedelta(weeks = course['weeks'])
 
 def get_enrolled_course_deadline_by_url(url):
@@ -227,9 +233,13 @@ def check_target(request):
 def add_target(request):
     if (request.method == "POST"):#TODO redirect by payment_method
         if (request.POST.has_key("type") and request.POST["type"] != "coursera_course"):
+
+            new_deadline = datetime.fromtimestamp(
+                time() + timedelta(days=int(request.POST["deadline_days"])).microseconds)
+            new_deadline = datetime.now()
             new_target = Target(
                 name=request.POST["name"],
-                deadline=datetime.fromtimestamp(float(request.POST["deadline"])),
+                deadline=new_deadline,
                 bid=float(request.POST["bid"]),
                 url=request.POST["url"]
             )

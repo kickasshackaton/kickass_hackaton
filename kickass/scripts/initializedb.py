@@ -57,7 +57,7 @@ def main(argv=sys.argv):
         target1.user = user2
         target1.overseer = user3
         DBSession.add(target1)
-        target1 = Target(name="Total unconciousness!", deadline=datetime.datetime(year=2014, month=10, day=5), bid=900,
+        target1 = Target(name="Total unconciousness!", deadline=datetime.datetime(year=2012, month=10, day=5), bid=900,
                          url="nanotech")
         target1.planned_progress = 60
         target1.current_progress = 40
