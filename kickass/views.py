@@ -186,7 +186,7 @@ def add_target(request):
         # name charity_type overseer bid
         DBSession.add(new_target)
         new_target.user = DBSession.query(User).filter(User.id == request.POST["user"]).first()
-        if request.POST.has_key["overseer"]:
+        if request.POST.has_key["overseer"] and request.POST["overseer"] != "0":
             new_target.overseer = DBSession.query(User).filter(User.id == request.POST["overseer"]).first()
 
     return {"Status" : "OK"}

@@ -1,3 +1,4 @@
+import time
 
 from sqlalchemy import (
     Column,
@@ -8,17 +9,14 @@ from sqlalchemy import (
     DateTime,
     ForeignKey
     )
-from sqlalchemy.orm import relationship, backref
-
+from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-
 from sqlalchemy.orm import (
     scoped_session,
     sessionmaker,
     )
-import time
-
 from zope.sqlalchemy import ZopeTransactionExtension
+
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 Base = declarative_base()
@@ -85,6 +83,15 @@ class Target(Base):
                 "planned_progress" : self.planned_progress,
                 "charity_type" : self.charity_type
         }
+
+    def __repr__(self):
+        return str({"id": self.id, "name": self.name, "type": self.type, "url": self.url,
+                    "deadline": time.mktime(self.deadline.timetuple()),
+                    "bid": self.bid,
+                    "current_progress": self.current_progress,
+                    "planned_progress": self.planned_progress,
+                    "charity_type": self.charity_type
+        })
 
     def __init__(self, name, deadline, bid, url, planned_progress = 0,current_progress = 0, type = "coursera_course"):
         self.name = name

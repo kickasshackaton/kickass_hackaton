@@ -27,8 +27,8 @@
                         <span class="sr-only"></span>
                       </div>
                   </div>
-                    <div class="deadline pull-right">${current.deadline}</div>
-                  <div class="time-left">3 weeks 4 hours left</div>
+                    <div class="deadline pull-right">${current.deadline.strftime("%m/%d/%y")}</div>
+                    <div class="time-left">3 weeks 4 hours left</div>
                 </div>
                 <div class="col-lg-2 col-xs-2">
                   <div tal:condition="current.overseer.id != current.user.id" class="overseer pull-left"><img src="/static/assets/img/userpic-small.png" /></div>
