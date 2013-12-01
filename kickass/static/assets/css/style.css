@@ -35,12 +35,9 @@ body {
     background-repeat:no-repeat;
     background-color:#eceeee;
 }
-.hero-unit.hero-unit-course {
-    background-image:url(../img/hero-unit-course.png);
-}
-.hero-unit.hero-unit-readit {
-    background-image:url(../img/hero-unit-readit.png);
-}
+.hero-unit.hero-unit-course { background-image:url(../img/hero-unit-course.png); }
+.hero-unit.hero-unit-readit { background-image:url(../img/hero-unit-readit.png); }
+.hero-unit.hero-unit-clean { background-image:url(../img/hero-unit-clean.png); }
 
 
 .targets-list, .account {

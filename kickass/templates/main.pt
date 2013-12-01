@@ -51,8 +51,9 @@
           </div><!-- /.navbar-collapse -->
       </nav>
 
-        <div class="hero-unit hero-unit-course" tal:condition="menu != 'readit'" ></div>
+        <div class="hero-unit hero-unit-course" tal:condition="menu == 'courses' or menu == 'watched_courses'" ></div>
         <div class="hero-unit hero-unit-readit" tal:condition="menu == 'readit'" ></div>
+        <div class="hero-unit hero-unit-clean" tal:condition="menu != 'readit' and menu != 'courses' and menu != 'watched_courses'" ></div>
 
         <div metal:define-slot="content"></div>
 
