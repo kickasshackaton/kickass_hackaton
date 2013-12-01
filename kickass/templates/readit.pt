@@ -28,7 +28,7 @@
                     <div class="readit-name"><span class="glyphicon glyphicon-book"></span> <a href="${current.url}">${current.name}</a></div>
                   </div>
                 <div class="col-lg-2 col-xs-2 control-block">
-                  <div tal:condition="current.overseer.id != current.user.id" class="overseer"><img src="/static/assets/img/userpic-small.png" /></div>
+                  <div tal:condition="current.overseer.id != current.user.id" class="overseer"><img src="/static/assets/img/userpics/${current.overseer.id}.jpg" style="width:32px; height:32px;" /></div>
                   <a class="bid btn btn-success">$${int(current.bid)}</a>
                 </div>
             </div>

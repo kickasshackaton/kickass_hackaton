@@ -16,21 +16,21 @@
                 <div class="col-lg-4 col-xs-4">
                   <div class="course-name"><a href="#">${current.name}</a></div>
                 </div>
-                <!--${current.type}-->
+
                 <div class="col-lg-6 col-xs-6">
                   <div class="progress">
-                      <div class="progress-bar progress-bar-success" style="width:${current.current_progress}%">
+                      <div class="progress-bar progress-bar-success" style="width:${int(current.current_progress)}%">
                         <span class="sr-only"></span>
                       </div>
-                      <div class="progress-bar progress-bar-warning" style="width:${current.planned_progress-current.current_progress}%">
+                      <div class="progress-bar progress-bar-warning" style="width:${int(current.planned_progress)-int(current.current_progress)}%">
                         <span class="sr-only"></span>
                       </div>
                   </div>
                     <div class="deadline pull-right">${current.deadline.strftime("%m/%d/%y")}</div>
-                    <div class="time-left">3 weeks 4 hours left</div>
+                    <!--?<div class="time-left">3 weeks 4 hours left</div>-->
                 </div>
                 <div class="col-lg-2 col-xs-2 control-block">
-                  <div tal:condition="current.overseer != None and current.overseer.id != current.user.id" class="overseer"><img src="/static/assets/img/userpic-small.png" /></div>
+                  <div tal:condition="current.overseer != None and current.overseer.id != current.user.id" class="overseer"><img src="/static/assets/img/userpics/${current.overseer.id}.jpg" style="width:32px; height:32px;" /></div>
                   <a class="bid btn btn-success">$${int(current.bid)}</a>
                 </div>
             </div>
