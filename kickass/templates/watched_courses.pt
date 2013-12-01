@@ -63,7 +63,7 @@
                 to pass
                   <select class="form-control" name="url" id="name">
                     <option tal:repeat="current enrollable" value="${current['course']['home_link']}">${current['topic']['name']}</option>
-                  </select> 
+                  </select>
                 </div>
                   <div>
                 or else shall my money go to
