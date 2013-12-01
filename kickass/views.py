@@ -91,10 +91,15 @@ def home(request):
     try:
         #one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
         targets = DBSession.query(User).filter(User.id == request.matchdict["id"]).first().my_targets#.filter(Target.type=="coursera_course").all()
+        out_targets = []
+        for target in targets:
+            if target.type == "coursera_course":
+                out_targets.append(target)
+        list_users = DBSession.query(User).all()
         list_users = DBSession.query(User).all()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'layout': site_layout(), 'targets': targets, 'list_users': list_users,
+    return {'layout': site_layout(), 'targets': out_targets, 'list_users': list_users,
             'list_overseers': list_users, 'charity_funds': charity_funds, "enrollable": get_enrollable_courses(),
             "menu": "courses", "new_target_payment_method": new_target_payment_method()}
 
@@ -104,11 +109,15 @@ def home_default(request):
     try:
         #one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
         targets = DBSession.query(User).filter(User.id == 1).first().my_targets#.filter(Target.type=="coursera_course").all()
+        out_targets = []
+        for target in targets:
+            if target.type == "coursera_course":
+                out_targets.append(target)
         list_users = DBSession.query(User).all()
-        user = DBSession.query(User).filter(User.id == 1).first()
+        user = DBSession.query(User).filter(User.id == 1).first()#TODO hardcoded user.id
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'layout': site_layout(), 'targets': targets, 'list_users': list_users,
+    return {'layout': site_layout(), 'targets': out_targets, 'list_users': list_users,
             'list_overseers': list_users, 'charity_funds': charity_funds, "enrollable": get_enrollable_courses(),
             "user": user, "menu": "courses", "new_target_payment_method": new_target_payment_method()}
 
