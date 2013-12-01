@@ -70,7 +70,7 @@ def get_course_deadline(course):
     return datetime(course['start_year'], course['start_month'], course['start_day']) + timedelta(weeks = course['weeks'])
 
 def get_enrolled_course_deadline_by_url(url):
-    return get_course_deadline(get_enrolled_course_by_url(url))
+    return get_course_deadline(get_enrolled_course_by_url(url)['course'])
 
 def get_enrolled_course_by_url(url):
     courseraApi = CourseraApi('ilya@nikans.ru','$e(ureP@66')
@@ -88,7 +88,7 @@ def get_enrolled_course_by_url(url):
         return topic
 
     return reduce(lambda result, item:
-                    item if item['topic_id'] == topic['id'] and item['id'] in enrollmentCoursesId else result
+                    {'course' : item, 'topic' : topic} if item['topic_id'] == topic['id'] and item['id'] in enrollmentCoursesId else result
         ,courses, None)
 
 def filter_non_unique_courses(courses):
@@ -161,10 +161,10 @@ def check_target(request):
 @view_config(route_name='add_target', renderer='json')
 def add_target(request):
     if(request.method == "POST"):
-        if(request.POST.has_key("type")):
+        if (request.POST.has_key("type") and request.POST["type"] != "coursera_course"):
             new_target = Target(
                 name=request.POST["name"],
-                deadline=datetime.fromtimestamp(12345566),
+                deadline=datetime.fromtimestamp(request.POST["deadline"]),
                 bid=request.POST["bid"],
                 url=request.POST["url"]
             )
@@ -173,7 +173,7 @@ def add_target(request):
         else:
             url = parse_coursera_api(request.POST["url"])
             new_target = Target(
-                name=request.POST["name"],
+                name=get_enrolled_course_by_url(url), #request.POST["name"],
                 deadline=get_enrolled_course_deadline_by_url(url),
                 bid=request.POST["bid"],
                 url=url
