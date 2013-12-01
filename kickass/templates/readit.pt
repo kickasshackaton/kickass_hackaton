@@ -85,6 +85,10 @@
                   </select>
                   witness!
                 </div>
+
+                  <div>
+                    <div metal:use-macro="new_target_payment_method"></div>
+                </div>
               </form>
             </div>
             <div class="modal-footer">

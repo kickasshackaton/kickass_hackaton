@@ -30,10 +30,17 @@ body {
 .hero-unit {
     height:485px;
     box-shadow:0px 1px 1px #e0e0e0;
+    background-position: top center;
+    background-repeat:no-repeat;
+    background-color:#eceeee;
 }
 .hero-unit.hero-unit-course {
-    background:#eceeee url(../img/hero-unit.png) top center no-repeat;
+    background-image:url(../img/hero-unit-course.png);
 }
+.hero-unit.hero-unit-readit {
+    background-image:url(../img/hero-unit-readit.png);
+}
+
 
 .targets-list {
     margin-top:50px; margin-bottom:50px;
